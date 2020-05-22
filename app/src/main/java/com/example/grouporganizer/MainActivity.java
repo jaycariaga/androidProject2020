@@ -15,6 +15,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.loginpage);
     }
 
+
+    public void SignUpMove(View view){
+        Intent intent = new Intent(this, SignUp.class);
+        startActivity(intent);
+    }
+
     //function called for the send button
     public void checkLogin(View view){
         Intent intent = new Intent(this, Home_page.class);
@@ -22,14 +28,14 @@ public class MainActivity extends AppCompatActivity {
         String checkuser = user.getText().toString();
         EditText pass = (EditText) findViewById(R.id.password);
         String checkpass = pass.getText().toString();
-        System.out.println(checkpass + checkuser);
-        //if(checkuser == "jason" && checkpass == "c"){
+        System.out.println(checkuser + checkpass);
+        if(checkuser.equals("jason")){
 
-        //    startActivity(intent);
-        //}
-        startActivity(intent);
-
-
+            startActivity(intent);
+        }
+        else{
+            System.out.println("Wrong Login:");
+        }//startActivity(intent);
     }
 
 

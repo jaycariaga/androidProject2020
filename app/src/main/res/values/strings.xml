@@ -6,4 +6,8 @@
     <string name="login">Sign In</string>
     <string name="username">username</string>
     <string name="password">password</string>
+    <string name="sign_up_here">Sign Up Here!</string>
+    <string name="first_name">First Name</string>
+    <string name="email">email</string>
+    <string name="sign_up">Sign Up</string>
 </resources>
