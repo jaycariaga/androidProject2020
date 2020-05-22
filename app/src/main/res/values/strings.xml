@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">GroupOrganizer</string>
+    <string name="welcome_user">WELCOME USER!</string>
+    <string name="ouch">ouch</string>
+    <string name="welcome_to_our_login_page">Welcome to our Login Page</string>
+    <string name="login">Sign In</string>
+    <string name="username">username</string>
+    <string name="password">password</string>
 </resources>
