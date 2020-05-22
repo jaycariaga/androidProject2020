@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         EditText pass = (EditText) findViewById(R.id.password);
         String checkpass = pass.getText().toString();
         System.out.println(checkuser + checkpass);
-        if(checkuser.equals("jason")){
+        if(checkuser.equals("jason") && checkpass.equals("c")){
 
             startActivity(intent);
         }
