@@ -1,73 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 
-    <EditText
-        android:id="@+id/firstname"
-        android:layout_width="164dp"
-        android:layout_height="49dp"
-        android:layout_marginBottom="60dp"
-        android:autofillHints=""
-        android:ems="10"
-        android:hint="@string/first_name"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/email"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+<!--Below Linear Layout is an example of framing
+areas in app for images, text, etc. -->
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="311dp"
-        android:layout_height="72dp"
-        android:layout_marginTop="40dp"
-        android:autoSizeTextType="uniform"
-        android:text="CREATE ACCOUNT"
-        app:layout_constraintHorizontal_bias="0.567"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_weight=".5"
+        android:layout_height="0dp"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/addmember"
-        android:layout_width="201dp"
-        android:layout_height="70dp"
-        android:layout_marginBottom="32dp"
-        android:onClick="checkSignUpDetail"
-        android:text="@string/sign_up"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/email"
-        android:layout_width="293dp"
-        android:layout_height="48dp"
-        android:layout_marginBottom="40dp"
-        android:autofillHints=""
-        android:ems="10"
-        android:hint="email"
-        android:inputType="textEmailAddress"
-        app:layout_constraintBottom_toTopOf="@+id/password"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+            <ImageView
+                android:id="@+id/imageView2"
+                android:scaleType="fitCenter"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/guessilldie" />
 
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
-        android:autofillHints=""
-        android:ems="10"
-        android:hint="@string/password"
-        android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/addmember"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:autoSizeTextType="uniform"
+                android:text="+ CREATE YOUR ACCOUNT!"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                />
+        </FrameLayout>
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="16dp"
+            android:padding="16dp">
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <EditText
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:hint="email"
+                android:inputType="textEmailAddress"
+                />
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:autofillHints=""
+                android:ems="10"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                 />
+
+            <EditText
+                android:id="@+id/firstname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:autofillHints=""
+                android:ems="10"
+                android:hint="@string/first_name"
+                android:inputType="textPersonName"
+                 />
+
+            <Button
+                android:id="@+id/addmember"
+                android:layout_width="198dp"
+                android:layout_height="70dp"
+                android:layout_centerHorizontal="false"
+                android:layout_centerVertical="false"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="50dp"
+                android:background="#0011FF"
+                android:onClick="checkSignUpDetail"
+                android:text="@string/sign_up"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:textSize="18sp" />
+
+
+        </LinearLayout>
+    </ScrollView>
+    <!--attempt at scrolling views-->
+
+
+</LinearLayout>
