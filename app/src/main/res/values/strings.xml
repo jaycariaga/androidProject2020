@@ -10,4 +10,5 @@
     <string name="first_name">First Name</string>
     <string name="email">email</string>
     <string name="sign_up">Sign Up</string>
+    <string name="login_instead">+ <u>LOGIN</u> INSTEAD</string>
 </resources>

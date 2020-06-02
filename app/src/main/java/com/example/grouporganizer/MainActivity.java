@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
     //simple button that moves to registration
     public void SignUpMove(View view){
-        Intent intent = new Intent(this, SignUp.class);
+        Intent intent = new Intent(MainActivity.this, SignUp.class);
         startActivity(intent);
     }
 
