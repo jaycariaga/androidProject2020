@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         compositeDisposable.clear();
         super.onStop();
     }
-
+//onStop needed to destroy unneeded objects
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,38 +54,33 @@ public class MainActivity extends AppCompatActivity {
 
     //function called for the send button
     public void checkLogin(View view){
-        Intent intent = new Intent(this, Home_page.class);
         EditText user = (EditText) findViewById(R.id.email);
         String checkuser = user.getText().toString();
         EditText pass = (EditText) findViewById(R.id.password);
         String checkpass = pass.getText().toString();
 
-        //make sure the inputs are not empty! WORKS NICELY
+        //make sure the inputs are not empty! WORKS and displays on bottom of app
         if(TextUtils.isEmpty(checkuser) || TextUtils.isEmpty(checkpass)){
             Toast.makeText(this, "Must fill ALL fields", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        //composite Disposable destroys data that isn't helpful anymore (ex. unsuccessful logins)
         compositeDisposable.add(iMyService.loginUser(checkuser, checkpass).subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Consumer<String>() {
             @Override
             public void accept(String response) throws Exception {
                 Toast.makeText(MainActivity.this, response, Toast.LENGTH_SHORT).show();
+                setContentView(R.layout.homepage);
             }
         }));
 
 
-        //if(checkuser.equals("jason") && checkpass.equals("c")){
 
-          //  startActivity(intent);
-        //}
-        //else{
-          //  System.out.println("Wrong Login:");
-        //}
 
-    }
+    } //finishes login function
 
 
 
-}
+} //end of Main Activity
