@@ -60,6 +60,7 @@ areas in app for images, text, etc. -->
                 android:autofillHints=""
                 android:hint="email"
                 android:inputType="textEmailAddress"
+
                 />
 
             <EditText
@@ -86,10 +87,8 @@ areas in app for images, text, etc. -->
 
             <Button
                 android:id="@+id/addmember"
-                android:layout_width="198dp"
-                android:layout_height="70dp"
-                android:layout_centerHorizontal="false"
-                android:layout_centerVertical="false"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="50dp"
                 android:background="#0011FF"
