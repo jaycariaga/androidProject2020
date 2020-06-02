@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
+//import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -23,18 +23,17 @@ import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
 
-    //not sure what happens here im just doing this rn
+    //creating object dump and interface for API express services
     CompositeDisposable compositeDisposable = new CompositeDisposable();
-    //CompositeDisposable compositeDisposable = new CompositeDisposable();
     IMyService iMyService;
 
     @Override
     protected void onStop(){
         compositeDisposable.clear();
         super.onStop();
-    }
-//onStop needed to destroy unneeded objects
+    } //onStop needed by CompositeDisposable to destroy unneeded objects
 
+//beginning method...
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,20 +45,21 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
+    //simple button that moves to registration
     public void SignUpMove(View view){
         Intent intent = new Intent(this, SignUp.class);
         startActivity(intent);
     }
 
-    //function called for the send button
+    //function called for the send button (WORKS)
     public void checkLogin(View view){
+        //reads inputs and converts to readable string
         EditText user = (EditText) findViewById(R.id.email);
         String checkuser = user.getText().toString();
         EditText pass = (EditText) findViewById(R.id.password);
         String checkpass = pass.getText().toString();
 
-        //make sure the inputs are not empty! WORKS and displays on bottom of app
+        //make sure the string readable inputs are NOT EMPTY! WORKS and displays on bottom of app
         if(TextUtils.isEmpty(checkuser) || TextUtils.isEmpty(checkpass)){
             Toast.makeText(this, "Must fill ALL fields", Toast.LENGTH_SHORT).show();
             return;
