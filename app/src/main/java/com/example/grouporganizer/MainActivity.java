@@ -72,7 +72,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void accept(String response) throws Exception {
                 Toast.makeText(MainActivity.this, response, Toast.LENGTH_SHORT).show();
-                setContentView(R.layout.homepage);
+                if(response.contains("success"))
+                    startActivity(new Intent(MainActivity.this, Home_page.class));
+                //moves state if success
             }
         }));
 

@@ -14,4 +14,7 @@ public class Home_page extends AppCompatActivity {
         setContentView(R.layout.homepage);
     }
 
+
+
+
 }
