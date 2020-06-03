@@ -3,7 +3,9 @@ package com.example.grouporganizer;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.view.View;
 //import android.widget.Button;
@@ -51,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    //function called for the send button (WORKS)
+    //function called for the send button and conducts login credentials and local user handling (WORKS)
     public void checkLogin(View view){
         //reads inputs and converts to readable string
         EditText user = (EditText) findViewById(R.id.email);
@@ -65,6 +67,9 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
+        //saves local cache of user for use post login
+        SavePreferences(checkuser);
+
         //composite Disposable destroys data that isn't helpful anymore (ex. unsuccessful logins)
         compositeDisposable.add(iMyService.loginUser(checkuser, checkpass).subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -72,9 +77,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void accept(String response) throws Exception {
                 Toast.makeText(MainActivity.this, response, Toast.LENGTH_SHORT).show();
-                if(response.contains("success"))
+                if(response.contains("success")) {
                     startActivity(new Intent(MainActivity.this, Home_page.class));
-                //moves state if success
+                    //moves state if success
+                }
             }
         }));
 
@@ -83,6 +89,13 @@ public class MainActivity extends AppCompatActivity {
 
     } //finishes login function
 
-
+    private void SavePreferences(String email){
+        //local storage of currently logged in user...
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("email", email);
+        editor.commit();
+        System.out.println(email);
+    }
 
 } //end of Main Activity
