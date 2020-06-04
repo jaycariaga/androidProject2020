@@ -7,25 +7,54 @@
     tools:context=".MainActivity"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/registerinstead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:textSize="16sp"
+            android:text="+ REGISTER ACCOUNT INSTEAD"
+            android:textColor="#0044FF"
+            android:textStyle="bold"
+            android:clickable="true"
+            android:onClick="SignUpMove"
+            />
+
+    </LinearLayout>
 
 
-    <Button
-        android:id="@+id/SignUpbutton"
-        android:layout_width="150dp"
-        android:layout_height="60dp"
-        android:layout_margin="20dp"
-        android:onClick="SignUpMove"
-        android:text="@string/sign_up" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_margin="15dp"
+        app:srcCompat="@drawable/ic_person_pin_black_24dp" />
+
 
     <TextView
-        android:id="@+id/LoginSwitch"
+        android:id="@+id/logtextbox"
         android:layout_width="match_parent"
         android:layout_height="53dp"
         android:layout_gravity="center"
-        android:layout_margin="32dp"
+        android:layout_marginBottom="20dp"
         android:text="Login Here!"
         android:autoSizeTextType="uniform"
+        android:textStyle="bold"
         android:textAlignment="center" />
+
 
 
     <EditText
@@ -59,13 +88,17 @@
         android:layout_margin="75dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="50dp"
-        android:background="#0011FF"
+        android:background="#0044FF"
         android:onClick="checkLogin"
         android:text="@string/login"
         android:textAlignment="center"
         android:textColor="@android:color/white"
         android:textSize="18sp"
  />
+
+        </LinearLayout>
+    </ScrollView>
+
 
 
 </LinearLayout>

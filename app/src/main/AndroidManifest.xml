@@ -26,6 +26,10 @@
         <activity
             android:name=".SignUp" />
 
+        <activity
+            android:name=".TeamActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
     </application>
 
 </manifest>

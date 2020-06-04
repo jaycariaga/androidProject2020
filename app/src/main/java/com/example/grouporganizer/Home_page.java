@@ -15,9 +15,13 @@ public class Home_page extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.homepage);
-        LoadPreferences();
+        //function below just checks success on cache
+        //LoadPreferences();
     }
 
+
+
+    //loads name of the logged in user: meant for conducting info for foreign key references
     private String LoadPreferences(){
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String  data = sharedPreferences.getString("email", "") ;
