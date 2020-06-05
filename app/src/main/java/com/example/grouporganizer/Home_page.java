@@ -21,7 +21,7 @@ public class Home_page extends AppCompatActivity {
 
 
 
-    //loads name of the logged in user: meant for conducting info for foreign key references
+    //loads name of the logged in user: meant for fetching email of current user for reference
     private String LoadPreferences(){
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String  data = sharedPreferences.getString("email", "") ;
