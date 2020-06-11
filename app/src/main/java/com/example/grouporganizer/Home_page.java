@@ -15,6 +15,9 @@ public class Home_page extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.homepage);
+
+        TeamPageFragment teamPageFragment = new TeamPageFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, teamPageFragment).commit();
         //function below just checks success on cache
         //LoadPreferences();
     }
