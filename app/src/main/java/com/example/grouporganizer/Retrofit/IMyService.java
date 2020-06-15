@@ -21,4 +21,22 @@ public interface IMyService {
     Observable<String> loginUser(@Field("email") String email,
                                     @Field("password") String password);
 
+
+    @POST("teamRegister")
+    @FormUrlEncoded
+    Observable<String> teamRegister(@Field("email") String email,
+                                    @Field("name") String name);
+
+
+    @POST("teamJoin")
+    @FormUrlEncoded
+    Observable<String> teamJoin(@Field("email") String email,
+                                    @Field("entryID") String entryID);
+
+    @POST("leaveTeam")
+    @FormUrlEncoded
+    Observable<String> leaveTeam(@Field("email") String email,
+                                    @Field("selectTeam") String selectTeam);
+
+
 }
