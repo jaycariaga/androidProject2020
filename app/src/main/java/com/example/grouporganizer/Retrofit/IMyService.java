@@ -2,9 +2,14 @@ package com.example.grouporganizer.Retrofit;
 
 //interface handles the API's that go to the NodeJS server
 
+import java.util.List;
+
 import io.reactivex.Observable;
+import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 public interface IMyService {
@@ -37,6 +42,10 @@ public interface IMyService {
     @FormUrlEncoded
     Observable<String> leaveTeam(@Field("email") String email,
                                     @Field("selectTeam") String selectTeam);
+
+    @POST("getTeams")
+    @FormUrlEncoded
+    Call<List<Team>> getTeams(@Field("email") String email);
 
 
 }
