@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <EditText
@@ -12,15 +14,31 @@
 
 
     <EditText
-        android:id="@+id/register_team_email"
-        android:layout_margin="16dp"
-        android:layout_height="wrap_content"
+        android:id="@+id/register_team_wordcheck"
         android:layout_width="match_parent"
-        android:hint="email"/>
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:hint="Enter Captcha Here" />
 
     <Button
         android:id="@+id/register_team_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Register Team" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Captcha Content Below:"
+        android:layout_margin="15dp"
+        ></TextView>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:scaleType="fitStart"
+        app:srcCompat="@drawable/deepfryme">
+
+    </ImageView>
+
 </LinearLayout>

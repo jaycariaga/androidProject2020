@@ -40,7 +40,7 @@ public class FragmentTeamsList extends Fragment {
         Retrofit retrofit = RetrofitClient.getInstance();
         IMyService iMyService = retrofit.create(IMyService.class);
 
-        Call<List<Team>> teamCall = iMyService.getTeams("john@example.com");
+        Call<List<Team>> teamCall = iMyService.getTeams("jaycariaga@gmail.com");
         teamCall.enqueue(new Callback<List<Team>>() {
             @Override
             public void onResponse(Call<List<Team>> call, Response<List<Team>> response) {

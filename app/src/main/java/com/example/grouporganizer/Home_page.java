@@ -54,7 +54,7 @@ public class Home_page extends AppCompatActivity {
         });
 
         //function below just checks success on cache
-        //LoadPreferences();
+        LoadPreferences();
     }
 
 
@@ -63,7 +63,7 @@ public class Home_page extends AppCompatActivity {
     private String LoadPreferences(){
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String  data = sharedPreferences.getString("email", "") ;
-        Toast.makeText(this,data, Toast.LENGTH_LONG).show();
+        Toast.makeText(this,"Welcome " + data, Toast.LENGTH_LONG).show();
 
         return data;
     }

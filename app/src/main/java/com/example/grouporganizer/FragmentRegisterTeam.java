@@ -1,7 +1,9 @@
 package com.example.grouporganizer;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,27 +32,39 @@ public class FragmentRegisterTeam extends Fragment {
         Retrofit retrofit = RetrofitClient.getInstance();
         final IMyService iMyService = retrofit.create(IMyService.class);
 
+        //attempt to load cached email into string data - retrieved from successful login
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        final String data = sharedPreferences.getString("email", "") ;
+
 
         Button button = v.findViewById(R.id.register_team_button);
         final EditText nameField = v.findViewById(R.id.register_team_name);
-        final EditText emailField = v.findViewById(R.id.register_team_email);
+        final EditText captchaField = v.findViewById(R.id.register_team_wordcheck);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-                new CompositeDisposable().add(iMyService.teamRegister(emailField.getText().toString(), nameField.getText().toString()).subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Consumer<String>() {
-                            @Override
-                            public void accept(String response) throws Exception {
-                                if(response.contains("success")) {
-                                    getActivity().getSupportFragmentManager().popBackStackImmediate();
-                                } else {
-                                    Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
+
+                if(captchaField.getText().toString().equals("J5E94T")) {
+                    new CompositeDisposable().add(iMyService.teamRegister(data, nameField.getText().toString()).subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Consumer<String>() {
+                                @Override
+                                public void accept(String response) throws Exception {
+                                    if (response.contains("success")) {
+                                        getActivity().getSupportFragmentManager().popBackStackImmediate();
+                                    } else {
+                                        Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
+                                    }
                                 }
-                            }
-                        }));
+                            }));
+                }
+                else{
+                    Toast.makeText(getContext(), "captcha match failed", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
+
         return v;
     }
 }

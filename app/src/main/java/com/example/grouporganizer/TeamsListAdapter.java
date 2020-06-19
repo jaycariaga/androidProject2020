@@ -41,6 +41,7 @@ public class TeamsListAdapter extends RecyclerView.Adapter<TeamsListAdapter.Team
     }
 
     public TeamsListAdapter(List<Team> dataset) {
+
         mDataset = dataset;
     }
 
