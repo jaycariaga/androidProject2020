@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,22 +45,27 @@ public class FragmentRegisterTeam extends Fragment {
             @Override
             public void onClick(final View view) {
 
-                if(captchaField.getText().toString().equals("J5E94T")) {
-                    new CompositeDisposable().add(iMyService.teamRegister(data, nameField.getText().toString()).subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new Consumer<String>() {
-                                @Override
-                                public void accept(String response) throws Exception {
-                                    if (response.contains("success")) {
-                                        getActivity().getSupportFragmentManager().popBackStackImmediate();
-                                    } else {
-                                        Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
+                if(!(TextUtils.isEmpty(nameField.getText().toString()))) {
+                    if (captchaField.getText().toString().equals("J5E94T")) {
+                        new CompositeDisposable().add(iMyService.teamRegister(data, nameField.getText().toString()).subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(new Consumer<String>() {
+                                    @Override
+                                    public void accept(String response) throws Exception {
+                                        if (response.contains("success")) {
+                                            getActivity().getSupportFragmentManager().popBackStackImmediate();
+                                        } else {
+                                            Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
+                                        }
                                     }
-                                }
-                            }));
+                                }));
+                    } else {
+                        Toast.makeText(getContext(), "captcha match failed", Toast.LENGTH_SHORT).show();
+                    }
                 }
                 else{
-                    Toast.makeText(getContext(), "captcha match failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "MUST FILL OUT Team Name Field", Toast.LENGTH_SHORT).show();
+
                 }
 
             }
