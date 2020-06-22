@@ -46,8 +46,8 @@ public class FragmentTeamsList extends Fragment {
         adapter.setOnItemClickListener(new TeamsListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                 db.get(position);
-                Toast.makeText(getContext(), "selected a team", Toast.LENGTH_SHORT).show();
+                Team selectedTm = db.get(position);
+                Toast.makeText(getContext(), "selected team: " + selectedTm.getName(), Toast.LENGTH_SHORT).show();
             }
         });
 

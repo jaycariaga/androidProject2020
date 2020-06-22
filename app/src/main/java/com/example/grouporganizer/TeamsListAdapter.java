@@ -1,5 +1,9 @@
 package com.example.grouporganizer;
 
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.RectShape;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +30,15 @@ public class TeamsListAdapter extends RecyclerView.Adapter<TeamsListAdapter.Team
 
     @Override
     public void onBindViewHolder(@NonNull TeamsViewHolder holder, int position) {
+        ShapeDrawable sd = new ShapeDrawable();
+        // Specify the shape of ShapeDrawable
+        sd.setShape(new RectShape());
+        sd.getPaint().setColor(Color.BLACK);
+        sd.getPaint().setStrokeWidth(1f);
+        sd.getPaint().setStyle(Paint.Style.STROKE);
+
+        holder.textView.setBackground(sd);
+        holder.textView.setTextColor(Color.WHITE);
         holder.textView.setText(mDataset.get(position).getName());
     }
 
