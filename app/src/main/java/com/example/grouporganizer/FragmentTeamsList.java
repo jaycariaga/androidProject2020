@@ -1,9 +1,12 @@
 package com.example.grouporganizer;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -40,7 +43,19 @@ public class FragmentTeamsList extends Fragment {
         Retrofit retrofit = RetrofitClient.getInstance();
         IMyService iMyService = retrofit.create(IMyService.class);
 
-        Call<List<Team>> teamCall = iMyService.getTeams("jaycariaga@gmail.com");
+        adapter.setOnItemClickListener(new TeamsListAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                 db.get(position);
+                Toast.makeText(getContext(), "selected a team", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        //attempt to load cached email into string data - retrieved from successful login
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        final String emaildata = sharedPreferences.getString("email", "") ;
+
+        Call<List<Team>> teamCall = iMyService.getTeams(emaildata);
         teamCall.enqueue(new Callback<List<Team>>() {
             @Override
             public void onResponse(Call<List<Team>> call, Response<List<Team>> response) {

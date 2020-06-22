@@ -24,6 +24,10 @@
         android:id="@+id/register_team_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#0011FF"
+        android:textColor="@android:color/white"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:text="Register Team" />
 
     <TextView
@@ -32,11 +36,13 @@
         android:text="Captcha Content Below:"
         android:layout_margin="15dp"
         ></TextView>
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:scaleType="fitStart"
+        android:layout_margin="20dp"
         app:srcCompat="@drawable/deepfryme">
 
     </ImageView>
