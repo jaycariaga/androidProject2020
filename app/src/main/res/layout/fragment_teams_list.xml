@@ -34,7 +34,8 @@
         android:background="#455679"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        />
+        >
+    </androidx.recyclerview.widget.RecyclerView>
         </ScrollView>
     <!--trying to design teams and join team button layout-->
     <LinearLayout

@@ -58,6 +58,7 @@ public class TeamsListAdapter extends RecyclerView.Adapter<TeamsListAdapter.Team
 
     public static class TeamsViewHolder extends RecyclerView.ViewHolder {
         public TextView textView;
+        public TextView AdminCheckView;
         public TeamsViewHolder(TextView v, final OnItemClickListener listener) {
             super(v);
             textView = v;

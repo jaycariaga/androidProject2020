@@ -1,5 +1,6 @@
 package com.example.grouporganizer;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -43,11 +44,14 @@ public class FragmentTeamsList extends Fragment {
         Retrofit retrofit = RetrofitClient.getInstance();
         IMyService iMyService = retrofit.create(IMyService.class);
 
+        //TODO: on item click find a way to move to team page
         adapter.setOnItemClickListener(new TeamsListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
                 Team selectedTm = db.get(position);
                 Toast.makeText(getContext(), "selected team: " + selectedTm.getName(), Toast.LENGTH_SHORT).show();
+                saveTeamPref(selectedTm.getName(), selectedTm.getEntryID());
+                //startActivity(new Intent(getContext(), TeamPageFragment.class));
             }
         });
 
@@ -79,4 +83,16 @@ public class FragmentTeamsList extends Fragment {
     void updateViews() {
 
     }
+
+    private void saveTeamPref(String team, String entryID){
+        //local storage of currently logged in user...
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("teamname", team);
+        editor.putString("teamID", entryID);
+        editor.commit();
+        System.out.println(team);
+    }
+
+
 }
