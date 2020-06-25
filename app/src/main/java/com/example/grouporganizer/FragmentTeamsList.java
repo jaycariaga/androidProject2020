@@ -7,9 +7,11 @@ import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -43,6 +45,19 @@ public class FragmentTeamsList extends Fragment {
         rv.setAdapter(adapter);
         Retrofit retrofit = RetrofitClient.getInstance();
         IMyService iMyService = retrofit.create(IMyService.class);
+
+        //TODO: have joinSelTeam button transition fragment view
+        //final Button TeamPagetrans = findViewById(R.id.joinSelTeam);
+        //TeamPagetrans.setOnClickListener(new View.OnClickListener(){
+        //    @Override
+        //  public void onClick(View v){
+        //        FragmentTransaction transaction = fm.beginTransaction();
+        //        transaction.replace(R.id.fragment_container, new TeamPageFragment());
+        //        transaction.addToBackStack(null);
+        //        transaction.commit();
+        //    }
+        //});
+
 
         //TODO: on item click find a way to move to team page
         adapter.setOnItemClickListener(new TeamsListAdapter.OnItemClickListener() {

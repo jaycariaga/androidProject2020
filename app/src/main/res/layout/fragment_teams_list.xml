@@ -53,9 +53,36 @@
             android:layout_margin="20dp"
             android:layout_marginBottom="50dp"
             android:background="#0044FF"
-            android:text="Join Team"
+            android:text="Enter Selected Team"
             android:textColor="@android:color/white"
             ></Button>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="#949494">
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:hint="Enter Entry Code"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/joinNewTeam"
+                app:layout_constraintStart_toStartOf="parent"></EditText>
+
+            <Button
+                android:id="@+id/joinNewTeam"
+                android:layout_width="170dp"
+                android:layout_height="50dp"
+                android:background="#0044FF"
+                android:text="Join New Team"
+                android:textColor="@android:color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"></Button>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
     </LinearLayout>
 
