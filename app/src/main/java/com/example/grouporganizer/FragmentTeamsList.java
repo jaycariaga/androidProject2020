@@ -47,16 +47,17 @@ public class FragmentTeamsList extends Fragment {
         IMyService iMyService = retrofit.create(IMyService.class);
 
         //TODO: have joinSelTeam button transition fragment view
-        //final Button TeamPagetrans = findViewById(R.id.joinSelTeam);
-        //TeamPagetrans.setOnClickListener(new View.OnClickListener(){
-        //    @Override
-        //  public void onClick(View v){
-        //        FragmentTransaction transaction = fm.beginTransaction();
-        //        transaction.replace(R.id.fragment_container, new TeamPageFragment());
-        //        transaction.addToBackStack(null);
-        //        transaction.commit();
-        //    }
-        //});
+        final Button TeamPagetrans = v.findViewById(R.id.joinSelTeam);
+        TeamPagetrans.setOnClickListener(new View.OnClickListener(){
+            @Override
+          public void onClick(View v){
+                //FragmentTransaction transaction = fm.beginTransaction();
+                //transaction.replace(R.id.fragment_container, new TeamPageFragment());
+                //transaction.addToBackStack(null);
+                //transaction.commit();
+                System.out.println("Hello World");
+            }
+        });
 
 
         //TODO: on item click find a way to move to team page
