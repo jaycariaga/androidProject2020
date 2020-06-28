@@ -33,6 +33,15 @@ public class FragmentTeamsList extends Fragment {
     RecyclerView rv;
     TeamsListAdapter adapter;
 
+    OnTeamSelectedListener callback;
+    public void setOnTeamSelectedListener(OnTeamSelectedListener callback) {
+        this.callback = callback;
+    }
+
+    public interface OnTeamSelectedListener {
+        public void onTeamSelected(String team);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -65,9 +74,9 @@ public class FragmentTeamsList extends Fragment {
             @Override
             public void onItemClick(int position) {
                 Team selectedTm = db.get(position);
-                Toast.makeText(getContext(), "selected team: " + selectedTm.getName(), Toast.LENGTH_SHORT).show();
                 saveTeamPref(selectedTm.getName(), selectedTm.getEntryID());
-                //startActivity(new Intent(getContext(), TeamPageFragment.class));
+                callback.onTeamSelected(selectedTm.getTeamID());
+
             }
         });
 
@@ -82,8 +91,6 @@ public class FragmentTeamsList extends Fragment {
                 if (response.body() != null) {
                     db.addAll(response.body());
                     adapter.notifyDataSetChanged();
-                    Snackbar.make(v, "Found " + response.body().size() + " teams", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
                 }
             }
 

@@ -67,10 +67,12 @@
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/email"
+        android:text="john@example.com"
         android:inputType="textEmailAddress" />
 
     <EditText
         android:id="@+id/password"
+        android:text="1234"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="32dp"

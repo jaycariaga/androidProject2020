@@ -4,15 +4,20 @@
         android:id="@+id/page_1"
         android:enabled="true"
         android:icon="@drawable/ic_chat_24px"
-        android:title="nav 1"/>
+        android:title="messages"/>
     <item
         android:id="@+id/page_2"
         android:enabled="true"
-        android:icon="@drawable/ic_chat_24px"
-        android:title="nav 2"/>
+        android:icon="@drawable/data_chart"
+        android:title="Data charting"/>
     <item
         android:id="@+id/page_3"
         android:enabled="true"
-        android:icon="@drawable/ic_chat_24px"
-        android:title="nav 3"/>
+        android:icon="@drawable/ic_search_24px"
+        android:title="Search"/>
+    <item
+        android:id="@+id/page_4"
+        android:enabled="true"
+        android:icon="@drawable/ic_tasks"
+        android:title="Task/Schedule"/>
 </menu>

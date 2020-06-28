@@ -9,15 +9,17 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
-public class Home_page extends AppCompatActivity {
+public class Home_page extends AppCompatActivity implements FragmentTeamsList.OnTeamSelectedListener {
     FragmentManager fm;
     FragmentTeamsList fragmentTeamsList;
 
@@ -69,5 +71,19 @@ public class Home_page extends AppCompatActivity {
         return data;
     }
 
+    @Override
+    public void onAttachFragment(@NonNull Fragment fragment) {
+        if (fragment instanceof FragmentTeamsList) {
+            FragmentTeamsList fragmentTeamsList = (FragmentTeamsList) fragment;
+            ((FragmentTeamsList) fragment).setOnTeamSelectedListener(this);
+        }
+    }
 
+    @Override
+    public void onTeamSelected(String team) {
+        FragmentTransaction transaction = fm.beginTransaction();
+        transaction.replace(R.id.fragment_container, new TeamPageFragment());
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
 }

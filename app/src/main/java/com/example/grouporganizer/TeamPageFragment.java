@@ -26,24 +26,32 @@ public class TeamPageFragment extends Fragment {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.page_1:
-                        BlankFragment fragment1 = BlankFragment.newInstance("Page one");
+                        BlankFragment fragment1 = BlankFragment.newInstance("Messages");
                         getChildFragmentManager()
                                 .beginTransaction()
                                 .replace(R.id.team_fragment_container, fragment1)
                                 .commit();
                         break;
                     case R.id.page_2:
-                        BlankFragment fragment2 = BlankFragment.newInstance("Page two");
+                        BlankFragment fragment2 = BlankFragment.newInstance("Data");
                         getChildFragmentManager()
                                 .beginTransaction()
                                 .replace(R.id.team_fragment_container, fragment2)
                                 .commit();
                         break;
                     case R.id.page_3:
-                        BlankFragment fragment3 = BlankFragment.newInstance("Page three");
+                        BlankFragment fragment3 = BlankFragment.newInstance("Search");
                         getChildFragmentManager()
                                 .beginTransaction()
                                 .replace(R.id.team_fragment_container, fragment3)
+                                .commit();
+                        break;
+
+                    case R.id.page_4:
+                        BlankFragment fragment4 = BlankFragment.newInstance("Tasks");
+                        getChildFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.team_fragment_container, fragment4)
                                 .commit();
                         break;
                 }
