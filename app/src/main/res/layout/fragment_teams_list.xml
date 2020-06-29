@@ -74,6 +74,11 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:contentDescription="picture"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/task"
+        android:background="#00509a"
         ></ImageView>
 
     </LinearLayout>

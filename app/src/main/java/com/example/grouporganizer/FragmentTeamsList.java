@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,6 +75,10 @@ public class FragmentTeamsList extends Fragment {
         TeamPagetrans.setOnClickListener(new View.OnClickListener(){
             @Override
           public void onClick(View v){
+                if(TextUtils.isEmpty(entryID.getText().toString())){
+                    Toast.makeText(getContext(),"Must Fill in Field", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
                 String email = sharedPreferences.getString("email", "");
                 compositeDisposable.add(iMyService.teamJoin(email, entryID.getText().toString()).subscribeOn(Schedulers.io())
