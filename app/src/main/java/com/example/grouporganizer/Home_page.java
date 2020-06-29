@@ -65,7 +65,7 @@ public class Home_page extends AppCompatActivity implements FragmentTeamsList.On
     //loads name of the logged in user: meant for fetching email of current user for reference
     private String LoadPreferences(){
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        String  data = sharedPreferences.getString("email", "") ;
+        String data = sharedPreferences.getString("email", "");
         Toast.makeText(this,"Welcome " + data, Toast.LENGTH_LONG).show();
 
         return data;

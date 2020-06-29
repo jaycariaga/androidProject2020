@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -23,6 +24,11 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -32,6 +38,15 @@ public class FragmentTeamsList extends Fragment {
     List<Team> db;
     RecyclerView rv;
     TeamsListAdapter adapter;
+    CompositeDisposable compositeDisposable = new CompositeDisposable();
+    Retrofit retrofit = RetrofitClient.getInstance();
+    IMyService iMyService = retrofit.create(IMyService.class);
+
+    @Override
+    public void onStop(){
+        compositeDisposable.clear();
+        super.onStop();
+    } //onStop needed by CompositeDisposable to destroy unneeded objects
 
     OnTeamSelectedListener callback;
     public void setOnTeamSelectedListener(OnTeamSelectedListener callback) {
@@ -52,19 +67,25 @@ public class FragmentTeamsList extends Fragment {
         rv = v.findViewById(R.id.teams_list_recyclerview);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
         rv.setAdapter(adapter);
-        Retrofit retrofit = RetrofitClient.getInstance();
-        IMyService iMyService = retrofit.create(IMyService.class);
 
         //TODO: have joinSelTeam button transition fragment view
-        final Button TeamPagetrans = v.findViewById(R.id.joinSelTeam);
+        final Button TeamPagetrans = v.findViewById(R.id.joinNewTeam);
+        final EditText entryID = v.findViewById(R.id.joinENTRYid);
         TeamPagetrans.setOnClickListener(new View.OnClickListener(){
             @Override
           public void onClick(View v){
-                //FragmentTransaction transaction = fm.beginTransaction();
-                //transaction.replace(R.id.fragment_container, new TeamPageFragment());
-                //transaction.addToBackStack(null);
-                //transaction.commit();
-                System.out.println("Hello World");
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                String email = sharedPreferences.getString("email", "");
+                compositeDisposable.add(iMyService.teamJoin(email, entryID.getText().toString()).subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Consumer<String>() {
+                            @Override
+                            public void accept(String response) throws Exception {
+                                Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
+                                Reload();
+                            }
+                        }));
+                //System.out.println("Hello World");
             }
         });
 
@@ -105,6 +126,9 @@ public class FragmentTeamsList extends Fragment {
 
     void updateViews() {
 
+    }
+    public void Reload(){
+        getActivity().getSupportFragmentManager().beginTransaction().replace(FragmentTeamsList.this.getId(), new FragmentTeamsList()).commit();
     }
 
     private void saveTeamPref(String team, String entryID){

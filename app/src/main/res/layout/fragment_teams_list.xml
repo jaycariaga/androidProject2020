@@ -45,18 +45,6 @@
         android:background="#c9c9c9"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/joinSelTeam"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_margin="20dp"
-            android:layout_marginBottom="50dp"
-            android:background="#0044FF"
-            android:text="Enter Selected Team"
-            android:textColor="@android:color/white"
-            ></Button>
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -64,6 +52,7 @@
             android:background="#949494">
 
             <EditText
+                android:id="@+id/joinENTRYid"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:hint="Enter Entry Code"
@@ -82,7 +71,10 @@
                 app:layout_constraintEnd_toEndOf="parent"></Button>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        ></ImageView>
 
     </LinearLayout>
 

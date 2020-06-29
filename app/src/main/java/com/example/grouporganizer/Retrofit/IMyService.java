@@ -36,7 +36,7 @@ public interface IMyService {
     @POST("teamJoin")
     @FormUrlEncoded
     Observable<String> teamJoin(@Field("email") String email,
-                                    @Field("entryID") String entryID);
+                                    @Field("entryid") String entryid);
 
     @POST("leaveTeam")
     @FormUrlEncoded
