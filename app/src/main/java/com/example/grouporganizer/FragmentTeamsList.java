@@ -69,7 +69,7 @@ public class FragmentTeamsList extends Fragment {
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
         rv.setAdapter(adapter);
 
-        //TODO: have joinSelTeam button transition fragment view
+        //carries joinTeamAPI upon button click
         final Button TeamPagetrans = v.findViewById(R.id.joinNewTeam);
         final EditText entryID = v.findViewById(R.id.joinENTRYid);
         TeamPagetrans.setOnClickListener(new View.OnClickListener(){
@@ -79,9 +79,7 @@ public class FragmentTeamsList extends Fragment {
                     Toast.makeText(getContext(),"Must Fill in Field", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-                String email = sharedPreferences.getString("email", "");
-                compositeDisposable.add(iMyService.teamJoin(email, entryID.getText().toString()).subscribeOn(Schedulers.io())
+                compositeDisposable.add(iMyService.teamJoin(loadEmail(), entryID.getText().toString()).subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Consumer<String>() {
                             @Override
@@ -95,7 +93,7 @@ public class FragmentTeamsList extends Fragment {
         });
 
 
-        //TODO: on item click find a way to move to team page
+        //item click transitions to team page
         adapter.setOnItemClickListener(new TeamsListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
@@ -107,10 +105,7 @@ public class FragmentTeamsList extends Fragment {
         });
 
         //attempt to load cached email into string data - retrieved from successful login
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        final String emaildata = sharedPreferences.getString("email", "") ;
-
-        Call<List<Team>> teamCall = iMyService.getTeams(emaildata);
+        Call<List<Team>> teamCall = iMyService.getTeams(loadEmail());
         teamCall.enqueue(new Callback<List<Team>>() {
             @Override
             public void onResponse(Call<List<Team>> call, Response<List<Team>> response) {
@@ -144,6 +139,12 @@ public class FragmentTeamsList extends Fragment {
         editor.putString("teamID", entryID);
         editor.commit();
         System.out.println(team);
+    }
+
+    private String loadEmail(){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String data = sharedPreferences.getString("email", "");
+        return data;
     }
 
 
