@@ -2,6 +2,7 @@ package com.example.grouporganizer.Retrofit;
 
 //interface handles the API's that go to the NodeJS server
 
+import java.util.Date;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -46,6 +47,18 @@ public interface IMyService {
     @POST("getTeams")
     @FormUrlEncoded
     Call<List<Team>> getTeams(@Field("email") String email);
+
+
+    @POST("getGenThreadLst")
+    @FormUrlEncoded
+    Call<List<Messages>> getGenThreadLst(@Field("entryid") String entryID);
+
+    @POST("sendgenmsg")
+    @FormUrlEncoded
+    Call<List<Messages>> sendgenmsg(@Field("user") String user,
+                                    @Field("message") String message,
+                                    @Field("teamname") String entryID,
+                                    @Field("timestamp") Date date);
 
 
 }
