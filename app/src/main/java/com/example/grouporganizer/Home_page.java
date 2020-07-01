@@ -82,7 +82,11 @@ public class Home_page extends AppCompatActivity implements FragmentTeamsList.On
     @Override
     public void onTeamSelected(String team) {
         FragmentTransaction transaction = fm.beginTransaction();
-        transaction.replace(R.id.fragment_container, new TeamPageFragment());
+        TeamPageFragment teamPageFragment = new TeamPageFragment();
+        Bundle args = new Bundle();
+        args.putString("entryId", team);
+        teamPageFragment.setArguments(args);
+        transaction.replace(R.id.fragment_container, teamPageFragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }

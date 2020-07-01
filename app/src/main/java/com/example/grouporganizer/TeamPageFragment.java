@@ -14,22 +14,30 @@ import android.widget.Toast;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class TeamPageFragment extends Fragment {
-
+    MessageFragment messageFragment;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_team_page, container, false);
+        final String teamID = getArguments().getString("entryId");
+        final View v = inflater.inflate(R.layout.fragment_team_page, container, false);
         BottomNavigationView bottomNav = v.findViewById(R.id.bottom_navigation);
+        messageFragment = new MessageFragment();
+        Bundle args = new Bundle();
+        args.putString("entryId", teamID);
+        messageFragment.setArguments(args);
+        getChildFragmentManager()
+                .beginTransaction()
+                .replace(R.id.team_fragment_container, messageFragment)
+                .commit();
         bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.page_1:
-                        BlankFragment fragment1 = BlankFragment.newInstance("Messages");
                         getChildFragmentManager()
                                 .beginTransaction()
-                                .replace(R.id.team_fragment_container, fragment1)
+                                .replace(R.id.team_fragment_container, messageFragment)
                                 .commit();
                         break;
                     case R.id.page_2:
