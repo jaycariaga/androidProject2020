@@ -1,6 +1,8 @@
 package com.example.grouporganizer;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,12 +60,11 @@ public class MessageFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //attempt to load cached email into string data - retrieved from successful login
-                iMyService.sendgenmsg("me", editTextMessage.getText().toString(), teamID, new Date()).enqueue(new Callback<List<Messages>>() {
+                iMyService.sendgenmsg(loadEmail(), editTextMessage.getText().toString(), loadEntryId(), new Date()).enqueue(new Callback<List<Messages>>() {
                     @Override
                     public void onResponse(Call<List<Messages>> call, Response<List<Messages>> response) {
                         refreshMessages();
                     }
-
                     @Override
                     public void onFailure(Call<List<Messages>> call, Throwable t) {
                         refreshMessages();
@@ -76,9 +77,21 @@ public class MessageFragment extends Fragment {
         return v;
     }
 
+    private String loadEmail(){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String data = sharedPreferences.getString("email", "");
+        return data;
+    }
+
+    private String loadEntryId(){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String data = sharedPreferences.getString("teamID", "");
+        return data;
+    }
+
     void refreshMessages() {
         //attempt to load cached email into string data - retrieved from successful login
-        Call<List<Messages>> messagesCall = iMyService.getGenThreadLst(teamID);
+        Call<List<Messages>> messagesCall = iMyService.getGenThreadLst(loadEntryId());
         messagesCall.enqueue(new Callback<List<Messages>>() {
             @Override
             public void onResponse(Call<List<Messages>> call, Response<List<Messages>> response) {

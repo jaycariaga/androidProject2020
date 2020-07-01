@@ -31,7 +31,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
-/*
+
         ShapeDrawable sd = new ShapeDrawable();
         // Specify the shape of ShapeDrawable
         sd.setShape(new RectShape());
@@ -40,8 +40,8 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
         sd.getPaint().setStyle(Paint.Style.STROKE);
 
         holder.textView.setBackground(sd);
-                holder.textView.setTextColor(Color.WHITE);
- */
+        holder.textView.setTextColor(Color.BLUE);
+
 
         holder.textView.setText(mDataset.get(position).getGenMsg());
     }

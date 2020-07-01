@@ -135,8 +135,8 @@ public class FragmentTeamsList extends Fragment {
         //local storage of currently logged in user...
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("teamname", team);
-        editor.putString("teamID", entryID);
+        editor.putString("teamname", team); //stores the TEAM NAME of the stored team
+        editor.putString("teamID", entryID); //teamID stores the ENTRYID of the team being joined
         editor.commit();
         System.out.println(team);
     }

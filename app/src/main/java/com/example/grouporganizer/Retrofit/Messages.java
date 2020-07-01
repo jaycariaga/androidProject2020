@@ -7,6 +7,7 @@ public class Messages {
     public String getGenMsg(){
         return message;
     }
+    public String getTimestamp(){return timestamp;}
 
 
 
