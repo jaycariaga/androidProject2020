@@ -4,7 +4,7 @@ public class Messages {
     private String message;
     private String timestamp;
 
-    public String getMsgThread(){
+    public String getGenMsg(){
         return message;
     }
 
