@@ -25,7 +25,8 @@
         android:name=".Home_page"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".SignUp" />
+            android:name=".SignUp"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity
             android:name=".TeamActivity"
