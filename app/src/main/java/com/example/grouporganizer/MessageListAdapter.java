@@ -24,7 +24,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     @NonNull
     @Override
     public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        TextView v = (TextView) LayoutInflater.from(parent.getContext()).inflate(R.layout.team_item, parent, false);
+        TextView v = (TextView) LayoutInflater.from(parent.getContext()).inflate(R.layout.message_item, parent, false);
         MessageListAdapter.MessageViewHolder vh = new MessageListAdapter.MessageViewHolder(v);
         return vh;
     }

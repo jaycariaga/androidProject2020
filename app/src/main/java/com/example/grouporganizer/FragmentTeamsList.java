@@ -92,7 +92,6 @@ public class FragmentTeamsList extends Fragment {
             }
         });
 
-
         //item click transitions to team page
         adapter.setOnItemClickListener(new TeamsListAdapter.OnItemClickListener() {
             @Override
@@ -125,8 +124,8 @@ public class FragmentTeamsList extends Fragment {
     }
 
     void updateViews() {
-
     }
+
     public void Reload(){
         getActivity().getSupportFragmentManager().beginTransaction().replace(FragmentTeamsList.this.getId(), new FragmentTeamsList()).commit();
     }

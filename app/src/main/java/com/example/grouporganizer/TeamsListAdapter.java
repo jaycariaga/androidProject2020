@@ -7,6 +7,7 @@ import android.graphics.drawable.shapes.RectShape;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,7 +24,7 @@ public class TeamsListAdapter extends RecyclerView.Adapter<TeamsListAdapter.Team
     @NonNull
     @Override
     public TeamsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        TextView v = (TextView) LayoutInflater.from(parent.getContext()).inflate(R.layout.team_item, parent, false);
+        RelativeLayout v = (RelativeLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.team_item, parent, false);
         TeamsViewHolder vh = new TeamsViewHolder(v, mListener);
         return vh;
     }
@@ -37,9 +38,10 @@ public class TeamsListAdapter extends RecyclerView.Adapter<TeamsListAdapter.Team
         sd.getPaint().setStrokeWidth(1f);
         sd.getPaint().setStyle(Paint.Style.STROKE);
 
-        holder.textView.setBackground(sd);
-        holder.textView.setTextColor(Color.WHITE);
-        holder.textView.setText(mDataset.get(position).getName());
+        holder.wholeItem.setBackground(sd);
+        holder.teamName.setTextColor(Color.WHITE);
+        holder.teamName.setText(mDataset.get(position).getName());
+        holder.AdminCheckView.setText("deez nutz");
     }
 
     @Override
@@ -57,15 +59,18 @@ public class TeamsListAdapter extends RecyclerView.Adapter<TeamsListAdapter.Team
     }
 
     public static class TeamsViewHolder extends RecyclerView.ViewHolder {
-        public TextView textView;
+        public TextView teamName;
+        public RelativeLayout wholeItem;
         public TextView AdminCheckView;
-        public TeamsViewHolder(TextView v, final OnItemClickListener listener) {
-            super(v);
-            textView = v;
+        public TeamsViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
+            super(itemView);
+            teamName = itemView.findViewById(R.id.teamNameView);
+            wholeItem = itemView.findViewById(R.id.teamRelativeView);
+            AdminCheckView = itemView.findViewById(R.id.adminCheckView);
             //for on click method
-            itemView.setOnClickListener(new View.OnClickListener() {
+            teamName.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View itemView) {
                     if(listener != null){
                         int position = getAdapterPosition();
                         if(position != RecyclerView.NO_POSITION){

@@ -1,11 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout android:orientation="vertical"
+    android:layout_height="wrap_content"
     android:layout_width="match_parent"
-    android:clickable="true"
-    android:background="?android:attr/selectableItemBackground"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:text="Team name"
-    android:padding="16dp"
-    android:textSize="18sp"
-    android:layout_height="wrap_content" />
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/teamRelativeView"
+    app:layout_constraintHorizontal_weight="2"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/teamNameView"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:padding="16dp"
+        android:textSize="18sp"
+        tools:text="Team name"
+        />
+
+
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/adminCheckView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:padding="16dp"
+        android:textSize="15sp"
+        tools:text="memOrAdmin"
+        android:layout_toRightOf="@id/teamNameView"/>
+
+
+</RelativeLayout>
+
+
