@@ -1,17 +1,25 @@
 package com.example.grouporganizer;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
-public class TeamActivity extends AppCompatActivity {
+public class TeamActivity extends Fragment {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.team_page);
-        //function below just checks success on cache
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        final View v =  inflater.inflate(R.layout.team_page, container, false);
 
+
+
+        return v;
     }
 
 

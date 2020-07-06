@@ -21,6 +21,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class TeamPageFragment extends Fragment {
     //FragmentManager fm;
     MessageFragment messageFragment;
+    TeamActivity team_Main = new TeamActivity();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -49,7 +50,7 @@ public class TeamPageFragment extends Fragment {
         messageFragment.setArguments(args);
         getChildFragmentManager()
                 .beginTransaction()
-                .replace(R.id.team_fragment_container, messageFragment)
+                .replace(R.id.team_fragment_container, team_Main)
                 .commit();
 
         //Navigation Bar Handling
