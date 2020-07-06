@@ -21,7 +21,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class TeamPageFragment extends Fragment {
     //FragmentManager fm;
     MessageFragment messageFragment;
-    TeamActivity team_Main = new TeamActivity();
+    TeamActivity team_Main = new TeamActivity(); //main menu instance created here
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
