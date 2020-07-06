@@ -1,5 +1,6 @@
 package com.example.grouporganizer;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ShapeDrawable;
@@ -9,17 +10,33 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.grouporganizer.Retrofit.IMyService;
+import com.example.grouporganizer.Retrofit.RetrofitClient;
 import com.example.grouporganizer.Retrofit.Team;
 
 import java.util.List;
 
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
 public class TeamsListAdapter extends RecyclerView.Adapter<TeamsListAdapter.TeamsViewHolder> {
     private List<Team> mDataset;
     private OnItemClickListener mListener;
+    private String currentUser;
+    Retrofit retrofit = RetrofitClient.getInstance();
+    IMyService iMyService = retrofit.create(IMyService.class);
 
     @NonNull
     @Override
@@ -38,10 +55,20 @@ public class TeamsListAdapter extends RecyclerView.Adapter<TeamsListAdapter.Team
         sd.getPaint().setStrokeWidth(1f);
         sd.getPaint().setStyle(Paint.Style.STROKE);
 
+        //handles admin/member text options
+        int check = 0;
+        //check = Integer.parseInt(getAdminCheck(mDataset.get(position).getEntryID()));
+        //System.out.println("this is a " + check);
+        if(check == 1)
+            holder.AdminCheckView.setText("Admin");
+        else
+            holder.AdminCheckView.setText("Member");
+
         holder.wholeItem.setBackground(sd);
         holder.teamName.setTextColor(Color.WHITE);
         holder.teamName.setText(mDataset.get(position).getName());
-        holder.AdminCheckView.setText("deez nutz");
+
+
     }
 
     @Override
@@ -82,9 +109,37 @@ public class TeamsListAdapter extends RecyclerView.Adapter<TeamsListAdapter.Team
         }
     }
 
-    public TeamsListAdapter(List<Team> dataset) {
+    public TeamsListAdapter(List<Team> dataset, String user) {
         mDataset = dataset;
+        currentUser = user;
     }
+
+    //TODO:yea im just trying to make this function take the response of check Admin and send a string from it
+    //doesnt work yet needs to get admin choice inside of it
+    private String getAdminCheck(String entryID){
+        final String[] answer = new String[1];
+        System.out.println(entryID);
+        iMyService.checkAdmin(currentUser, entryID).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String response) throws Exception {
+                        //fdsafdsa
+                        if(response.contains("1")) {
+                            answer[0] = "1";
+                            //moves state if success
+                        }
+                        else
+                            answer[0] = "0";
+                    }
+                });
+        System.out.println(answer);
+
+        return answer[0];
+
+    }
+
+
 
 
 

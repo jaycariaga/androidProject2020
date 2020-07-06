@@ -1,16 +1,17 @@
 <resources>
-    <string name="app_name">GroupOrganizer</string>
+    <string name="app_name">Taskioli</string>
     <string name="welcome_user">WELCOME USER!</string>
     <string name="ouch">ouch</string>
     <string name="welcome_to_our_login_page">Welcome to our Login Page</string>
     <string name="login">Sign In</string>
     <string name="username">username</string>
     <string name="password">password</string>
-    <string name="sign_up_here">Sign Up Here!</string>
+    <string name="sign_up_here"> + <u>Sign Up</u> Here!</string>
     <string name="first_name">First Name</string>
     <string name="email">email</string>
     <string name="sign_up">Sign Up</string>
-    <string name="login_instead">+ <u>LOGIN</u> INSTEAD</string>
+    <string name="login_instead"> + <u>LOGIN</u> INSTEAD</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="back_to_homepage">- Back to HomePage</string>
 </resources>

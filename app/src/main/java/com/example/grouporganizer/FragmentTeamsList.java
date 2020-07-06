@@ -64,7 +64,7 @@ public class FragmentTeamsList extends Fragment {
         // Inflate the layout for this fragment
         final View v = inflater.inflate(R.layout.fragment_teams_list, container, false);
         db = new ArrayList<>();
-        adapter = new TeamsListAdapter(db);
+        adapter = new TeamsListAdapter(db, loadEmail());
         rv = v.findViewById(R.id.teams_list_recyclerview);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
         rv.setAdapter(adapter);
@@ -137,7 +137,7 @@ public class FragmentTeamsList extends Fragment {
         editor.putString("teamname", team); //stores the TEAM NAME of the stored team
         editor.putString("teamID", entryID); //teamID stores the ENTRYID of the team being joined
         editor.commit();
-        System.out.println(team);
+        //System.out.println(team);
     }
 
     private String loadEmail(){

@@ -84,9 +84,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }));
 
-
-
-
     } //finishes login function
 
     private void SavePreferences(String email){

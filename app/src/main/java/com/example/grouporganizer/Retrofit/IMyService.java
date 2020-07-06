@@ -60,5 +60,10 @@ public interface IMyService {
                                     @Field("teamname") String entryID,
                                     @Field("timestamp") Date date);
 
+    @POST("checkAdmin")
+    @FormUrlEncoded
+    Observable<String> checkAdmin(@Field("email") String user,
+                       @Field("entryID") String entryID);
+
 
 }
