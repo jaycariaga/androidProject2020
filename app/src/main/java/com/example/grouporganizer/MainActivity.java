@@ -26,8 +26,8 @@ import retrofit2.Retrofit;
 public class MainActivity extends AppCompatActivity {
 
     //creating object dump and interface for API express services
-    CompositeDisposable compositeDisposable = new CompositeDisposable();
-    IMyService iMyService;
+        CompositeDisposable compositeDisposable = new CompositeDisposable();
+        IMyService iMyService;
 
     @Override
     protected void onStop(){
@@ -42,8 +42,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.loginpage);
 
         //additions to initialize api services
-        Retrofit retrofitClient = RetrofitClient.getInstance();
-        iMyService = retrofitClient.create(IMyService.class);
+        while(true) {
+            try {
+                Retrofit retrofitClient = RetrofitClient.getInstance();
+                iMyService = retrofitClient.create(IMyService.class);
+                return;
+            }
+            catch (Exception e) {
+                Toast.makeText(MainActivity.this, "Failed to connect to server", Toast.LENGTH_SHORT).show();
+                throw e;
+            }
+        }
 
     }
 
@@ -54,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //function called for the send button and conducts login credentials and local user handling (WORKS)
-    public void checkLogin(View view){
+    public void checkLogin(View view) throws Exception{
         //reads inputs and converts to readable string
         EditText user = (EditText) findViewById(R.id.email);
         String checkuser = user.getText().toString();
@@ -70,19 +79,25 @@ public class MainActivity extends AppCompatActivity {
         //saves local cache of user for use post login
         SavePreferences(checkuser);
 
-        //composite Disposable destroys data that isn't helpful anymore (ex. unsuccessful logins)
-        compositeDisposable.add(iMyService.loginUser(checkuser, checkpass).subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new Consumer<String>() {
-            @Override
-            public void accept(String response) throws Exception {
-                Toast.makeText(MainActivity.this, response, Toast.LENGTH_SHORT).show();
-                if(response.contains("success")) {
-                    startActivity(new Intent(MainActivity.this, Home_page.class));
-                    //moves state if success
-                }
-            }
-        }));
+        try {
+            //composite Disposable destroys data that isn't helpful anymore (ex. unsuccessful logins)
+            compositeDisposable.add(iMyService.loginUser(checkuser, checkpass).subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<String>() {
+                        @Override
+                        public void accept(String response) throws Exception {
+                            Toast.makeText(MainActivity.this, response, Toast.LENGTH_SHORT).show();
+                            if (response.contains("success")) {
+                                startActivity(new Intent(MainActivity.this, Home_page.class));
+                                //moves state if success
+                            }
+                        }
+
+                    }));
+        }
+        catch(Exception e){
+            Toast.makeText(MainActivity.this, "Server not connected. Try Again", Toast.LENGTH_SHORT).show();
+        }
 
     } //finishes login function
 

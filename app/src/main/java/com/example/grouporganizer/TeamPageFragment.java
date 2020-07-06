@@ -36,7 +36,7 @@ public class TeamPageFragment extends Fragment {
         homepage_switch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Home_page homePage = new Home_page();
+                //Home_page homePage = new Home_page();
                 getActivity().onBackPressed();
             }
         });
