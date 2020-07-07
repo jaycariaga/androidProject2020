@@ -19,7 +19,6 @@ import android.widget.Toast;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class TeamPageFragment extends Fragment {
-    //FragmentManager fm;
     MessageFragment messageFragment;
     TeamActivity team_Main = new TeamActivity(); //main menu instance created here
     @Override
@@ -39,6 +38,17 @@ public class TeamPageFragment extends Fragment {
             public void onClick(View v) {
                 //Home_page homePage = new Home_page();
                 getActivity().onBackPressed();
+            }
+        });
+
+        final TextView teamMainRet = v.findViewById(R.id.teamMainReturn);
+        teamMainRet.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                getChildFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.team_fragment_container, team_Main)
+                        .commit();
             }
         });
 
