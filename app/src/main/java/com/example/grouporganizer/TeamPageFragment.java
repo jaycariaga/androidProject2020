@@ -27,7 +27,8 @@ public class TeamPageFragment extends Fragment {
         // Inflate the layout for this fragment
         final String teamID = getArguments().getString("entryId");
         final View v = inflater.inflate(R.layout.fragment_team_page, container, false);
-        BottomNavigationView bottomNav = v.findViewById(R.id.bottom_navigation);
+        //added final to bottomNav
+        final BottomNavigationView bottomNav = v.findViewById(R.id.bottom_navigation);
 
         //moves back to home_page class fragments
         final TextView teamDisp = v.findViewById(R.id.teamnameDisp);
@@ -45,6 +46,10 @@ public class TeamPageFragment extends Fragment {
         teamMainRet.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                int size = bottomNav.getMenu().size();
+                for (int i = 0; i < size; i++) {
+                    bottomNav.getMenu().getItem(i).setChecked(false);
+                }
                 getChildFragmentManager()
                         .beginTransaction()
                         .replace(R.id.team_fragment_container, team_Main)
