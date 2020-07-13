@@ -55,7 +55,7 @@ public interface IMyService {
 
     @POST("authenticateToken")
     @FormUrlEncoded
-    Observable<String> authenticateToken(@Field("jwt") String jwt);
+    Call<String> authenticateToken(@Field("jwt") String jwt);
 
     @POST("sendgenmsg")
     @FormUrlEncoded

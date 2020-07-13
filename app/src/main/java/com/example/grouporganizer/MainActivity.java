@@ -12,27 +12,32 @@ import android.view.View;
 //import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.auth0.android.jwt.JWT;
 import com.example.grouporganizer.Retrofit.IMyService;
 import com.example.grouporganizer.Retrofit.RetrofitClient;
 
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 
 //LOGIN PAGE
 
 public class MainActivity extends AppCompatActivity {
     LinearLayout root;
+    ProgressBar loginIndicator;
 
     //creating object dump and interface for API express services
-        CompositeDisposable compositeDisposable = new CompositeDisposable();
-        IMyService iMyService;
+    CompositeDisposable compositeDisposable = new CompositeDisposable();
+    IMyService iMyService;
+    boolean coldStart = true;
 
     @Override
     protected void onStop(){
@@ -47,18 +52,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.loginpage);
 
         root = findViewById(R.id.login_root);
-        root.setVisibility(View.GONE);
+        loginIndicator = findViewById(R.id.login_indicator);
+
 
         //additions to initialize api services
         while(true) {
             try {
                 Retrofit retrofitClient = RetrofitClient.getInstance();
                 iMyService = retrofitClient.create(IMyService.class);
-                authenticateToken();
 
+                authenticateToken();
                 return;
             }
-            catch (Exception e) {
+            catch (Exception e) {root.setVisibility(View.VISIBLE);
+        loginIndicator.setVisibility(View.GONE);
                 Toast.makeText(MainActivity.this, "Failed to connect to server", Toast.LENGTH_SHORT).show();
                 throw e;
             }
@@ -68,32 +75,44 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!coldStart) {
+            root.setVisibility(View.VISIBLE);
+            loginIndicator.setVisibility(View.GONE);
+        }
+        coldStart = false;
+    }
+
     public void authenticateToken() {
+        root.setVisibility(View.GONE);
+        loginIndicator.setVisibility(View.VISIBLE);
         SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
         String jwt = sharedPref.getString("jwt", null);
         if (jwt != null) {
-            try {
-                compositeDisposable.add(iMyService.authenticateToken(jwt).subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Consumer<String>() {
-                            @Override
-                            public void accept(String s) throws Exception {
-                                if (s.equals("valid")) {
-                                    startActivity(new Intent(MainActivity.this, Home_page.class));
-                                } else {
-                                    Toast.makeText(getApplication(), "invalid token", Toast.LENGTH_SHORT).show();
-                                    root.setVisibility(View.VISIBLE);
-                                }
-                            }
-                        }));
-            } catch (Exception e) {
-                Toast.makeText(getApplication(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                root.setVisibility(View.VISIBLE);
-            }
+            Call<String> call = iMyService.authenticateToken(jwt);
+            call.enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    if (response.body().equals("valid")) {
+                        startActivity(new Intent(MainActivity.this, Home_page.class));
+                    } else {
+                        root.setVisibility(View.VISIBLE);
+                        loginIndicator.setVisibility(View.GONE);
+                    }
+                }
 
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+                    Toast.makeText(getApplication(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                    root.setVisibility(View.VISIBLE);
+                    loginIndicator.setVisibility(View.GONE);
+                }
+            });
         } else {
-            Toast.makeText(getApplication(), "token was not saved :(", Toast.LENGTH_SHORT).show();
             root.setVisibility(View.VISIBLE);
+            loginIndicator.setVisibility(View.GONE);
         }
 
     }
@@ -129,7 +148,6 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void accept(String response) throws Exception {
                             JWT jwt = new JWT(response);
-                            Toast.makeText(getApplication(), jwt.toString(), Toast.LENGTH_SHORT).show();
                             getPreferences(MODE_PRIVATE).edit().putString("jwt", jwt.toString()).apply();
                             startActivity(new Intent(MainActivity.this, Home_page.class));
                             //moves state if success
