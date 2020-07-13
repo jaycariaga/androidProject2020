@@ -53,6 +53,10 @@ public interface IMyService {
     @FormUrlEncoded
     Call<List<Messages>> getGenThreadLst(@Field("entryid") String entryID);
 
+    @POST("authenticateToken")
+    @FormUrlEncoded
+    Observable<String> authenticateToken(@Field("jwt") String jwt);
+
     @POST("sendgenmsg")
     @FormUrlEncoded
     Call<List<Messages>> sendgenmsg(@Field("user") String user,

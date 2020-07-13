@@ -2,6 +2,7 @@ package com.example.grouporganizer;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,11 +11,14 @@ import android.text.TextUtils;
 import android.view.View;
 //import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.auth0.android.jwt.JWT;
 import com.example.grouporganizer.Retrofit.IMyService;
 import com.example.grouporganizer.Retrofit.RetrofitClient;
 
+import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
@@ -24,6 +28,7 @@ import retrofit2.Retrofit;
 //LOGIN PAGE
 
 public class MainActivity extends AppCompatActivity {
+    LinearLayout root;
 
     //creating object dump and interface for API express services
         CompositeDisposable compositeDisposable = new CompositeDisposable();
@@ -41,17 +46,54 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.loginpage);
 
+        root = findViewById(R.id.login_root);
+        root.setVisibility(View.GONE);
+
         //additions to initialize api services
         while(true) {
             try {
                 Retrofit retrofitClient = RetrofitClient.getInstance();
                 iMyService = retrofitClient.create(IMyService.class);
+                authenticateToken();
+
                 return;
             }
             catch (Exception e) {
                 Toast.makeText(MainActivity.this, "Failed to connect to server", Toast.LENGTH_SHORT).show();
                 throw e;
             }
+
+        }
+
+
+    }
+
+    public void authenticateToken() {
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        String jwt = sharedPref.getString("jwt", null);
+        if (jwt != null) {
+            try {
+                compositeDisposable.add(iMyService.authenticateToken(jwt).subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Consumer<String>() {
+                            @Override
+                            public void accept(String s) throws Exception {
+                                if (s.equals("valid")) {
+                                    startActivity(new Intent(MainActivity.this, Home_page.class));
+                                } else {
+                                    Toast.makeText(getApplication(), "invalid token", Toast.LENGTH_SHORT).show();
+                                    root.setVisibility(View.VISIBLE);
+                                }
+                            }
+                        }));
+            } catch (Exception e) {
+                Toast.makeText(getApplication(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                root.setVisibility(View.VISIBLE);
+            }
+
+        } else {
+            Toast.makeText(getApplication(), "token was not saved :(", Toast.LENGTH_SHORT).show();
+            root.setVisibility(View.VISIBLE);
         }
 
     }
@@ -86,11 +128,11 @@ public class MainActivity extends AppCompatActivity {
                     .subscribe(new Consumer<String>() {
                         @Override
                         public void accept(String response) throws Exception {
-                            Toast.makeText(MainActivity.this, response, Toast.LENGTH_SHORT).show();
-                            if (response.contains("success")) {
-                                startActivity(new Intent(MainActivity.this, Home_page.class));
-                                //moves state if success
-                            }
+                            JWT jwt = new JWT(response);
+                            Toast.makeText(getApplication(), jwt.toString(), Toast.LENGTH_SHORT).show();
+                            getPreferences(MODE_PRIVATE).edit().putString("jwt", jwt.toString()).apply();
+                            startActivity(new Intent(MainActivity.this, Home_page.class));
+                            //moves state if success
                         }
 
                     }));
