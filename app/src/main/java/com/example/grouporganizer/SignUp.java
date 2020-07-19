@@ -74,7 +74,7 @@ public class SignUp extends AppCompatActivity {
                     @Override
                     public void accept(String response) throws Exception {
                         Toast.makeText(SignUp.this, response, Toast.LENGTH_SHORT).show();
-                        setContentView(R.layout.loginpage);
+                        startActivity(new Intent(SignUp.this, MainActivity.class));
                     }
                 }));
 

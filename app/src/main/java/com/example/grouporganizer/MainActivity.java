@@ -147,6 +147,10 @@ public class MainActivity extends AppCompatActivity {
                     .subscribe(new Consumer<String>() {
                         @Override
                         public void accept(String response) throws Exception {
+                            if(response.contains("not exist")||response.contains("Wrong")){
+                                Toast.makeText(MainActivity.this, response, Toast.LENGTH_SHORT).show();
+                                return;
+                            }
                             JWT jwt = new JWT(response);
                             getPreferences(MODE_PRIVATE).edit().putString("jwt", jwt.toString()).apply();
                             startActivity(new Intent(MainActivity.this, Home_page.class));
