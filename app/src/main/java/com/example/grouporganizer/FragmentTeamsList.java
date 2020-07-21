@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -70,8 +71,16 @@ public class FragmentTeamsList extends Fragment {
         rv.setAdapter(adapter);
 
         //carries joinTeamAPI upon button click
+        final TextView logout = v.findViewById(R.id.logoutHome);
         final Button TeamPagetrans = v.findViewById(R.id.joinNewTeam);
         final EditText entryID = v.findViewById(R.id.joinENTRYid);
+        logout.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                getActivity().onBackPressed();
+            }
+
+        });
         TeamPagetrans.setOnClickListener(new View.OnClickListener(){
             @Override
           public void onClick(View v){
@@ -88,7 +97,6 @@ public class FragmentTeamsList extends Fragment {
                                 Reload();
                             }
                         }));
-                //System.out.println("Hello World");
             }
         });
 

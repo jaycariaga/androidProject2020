@@ -7,14 +7,31 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Teams"
-        android:padding="10dp"
-        android:textSize="18sp"
-        android:background="#333333"
-        android:textColor="#FFF"/>
+        android:background="#333333">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Teams"
+            android:padding="10dp"
+            android:textSize="18sp"
+            android:layout_alignParentLeft="true"
+            android:textColor="#FFF"/>
+        <TextView
+            android:id="@+id/logoutHome"
+            android:text="LOGOUT"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:padding="10dp"
+            android:gravity="center"
+            android:textSize="18dp"
+            android:clickable="true"
+            android:textColor="#ff0000"
+            android:layout_height="wrap_content">
+        </TextView>
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

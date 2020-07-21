@@ -4,14 +4,42 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#4f4e4e">
+    android:background="#757575">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#333333"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Register A Team"
+            android:textColor="#FFFFFF"
+            android:textSize="22dp">
+        </TextView>
+        <TextView
+            android:id="@+id/RegisterToHome"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="- Go Back to HomePage"
+            android:textColor="#00e5ff"
+            android:textSize="16dp"
+            android:gravity="center"
+            android:padding="15dp"
+            android:clickable="true"
+            ></TextView>
+
+    </RelativeLayout>
 
     <EditText
         android:id="@+id/register_team_name"
         android:layout_margin="16dp"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:textColorHint="#b0b0b0"
+        android:textColorHint="#000000"
         android:hint="Team Name"/>
 
 
@@ -20,7 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:textColorHint="#b0b0b0"
+        android:textColorHint="#000000"
         android:hint="Enter Captcha Here" />
 
     <Button
@@ -28,6 +56,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#0011FF"
+        android:textSize="20dp"
         android:textColor="@android:color/white"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
