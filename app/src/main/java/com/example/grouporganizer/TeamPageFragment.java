@@ -73,6 +73,12 @@ public class TeamPageFragment extends Fragment {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
+                    case R.id.page_0:
+                        getChildFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.team_fragment_container, team_Main)
+                                .commit();
+                        break;
                     case R.id.page_1:
                         getChildFragmentManager()
                                 .beginTransaction()
