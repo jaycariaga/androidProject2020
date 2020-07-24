@@ -19,14 +19,15 @@
             android:layout_height="match_parent"
             android:layout_toLeftOf="@id/teamnameDisp"
             android:autoSizeTextType="uniform"
-            android:background="#4a4a4a"
+            android:background="#000000"
             android:clickable="true"
             android:padding="7dp"
-            android:text="- Click HERE to Exit Team Page"
-            android:textColor="#FFFFFF"
+            android:text="Go BACK to Home Page"
+            android:textColor="#ff0000"
             android:visibility="visible"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            />
 
         <TextView
             android:id="@+id/teamnameDisp"
@@ -48,12 +49,12 @@
             android:layout_alignParentRight="true"
             android:layout_toRightOf="@id/teamnameDisp"
             android:autoSizeTextType="uniform"
-            android:background="#4a4a4a"
+            android:background="#000000"
             android:clickable="true"
             android:gravity="right"
             android:padding="5dp"
-            android:text="+ Go to TEAM'S MENU"
-            android:textColor="#FFFFFF"></TextView>
+            android:text="+ Go to TEAM USER MENU"
+            android:textColor="#00e5ff"></TextView>
 
     </RelativeLayout>
 
