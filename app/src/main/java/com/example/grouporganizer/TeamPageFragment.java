@@ -47,9 +47,7 @@ public class TeamPageFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 int size = bottomNav.getMenu().size();
-                for (int i = 0; i < size; i++) {
-                    bottomNav.getMenu().getItem(i).setChecked(false);
-                }
+                bottomNav.setSelectedItemId(R.id.page_0);
                 getChildFragmentManager()
                         .beginTransaction()
                         .replace(R.id.team_fragment_container, team_Main)

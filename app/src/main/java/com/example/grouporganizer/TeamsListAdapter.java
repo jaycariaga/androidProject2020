@@ -52,7 +52,7 @@ public class TeamsListAdapter extends RecyclerView.Adapter<TeamsListAdapter.Team
         // Specify the shape of ShapeDrawable
         sd.setShape(new RectShape());
         sd.getPaint().setColor(Color.BLACK);
-        sd.getPaint().setStrokeWidth(1f);
+        sd.getPaint().setStrokeWidth(7f);
         sd.getPaint().setStyle(Paint.Style.STROKE);
 
         //handles admin/member text options
