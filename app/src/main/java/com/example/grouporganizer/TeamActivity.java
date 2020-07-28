@@ -19,7 +19,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-public class TeamActivity extends Fragment implements AdapterView.OnItemSelectedListener {
+public class TeamActivity extends Fragment  {
 
     //dropdown box for actions are here instead of a resource file because being an admin changes the actions...
     //private Spinner spinner;
@@ -34,16 +34,44 @@ public class TeamActivity extends Fragment implements AdapterView.OnItemSelected
         showActions = (Button) v.findViewById(R.id.showTeamAction);
         showActions.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View mView) {
+            public void onClick(View view) {
                 //TODO: Does not work due to spinner returning nullpointerexception
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 View dialogview = inflater.inflate(R.layout.team_menu_spinner, null);
                 builder.setTitle("Pick an Action");
-                final Spinner spinner = (Spinner) mView.findViewById(R.id.spinner);
+                final Spinner spinner = (Spinner) dialogview.findViewById(R.id.spinner);
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
                         android.R.layout.simple_spinner_item, paths);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner.setAdapter(adapter);
+
+                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        switch (position) {
+                            case 1:
+                                Toast.makeText(getContext(), "poked", Toast.LENGTH_SHORT).show();
+                                break;
+                            case 2:
+                                Toast.makeText(getContext(), "goes to task page", Toast.LENGTH_SHORT).show();
+                                break;
+                            case 3:
+                                Toast.makeText(getContext(), "api to leave team", Toast.LENGTH_SHORT).show();
+                                break;
+
+                        }
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+
+                //public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
+
+
+                //}
 
                 builder.setPositiveButton("Perform Action", new DialogInterface.OnClickListener() {
                     @Override
@@ -81,21 +109,7 @@ public class TeamActivity extends Fragment implements AdapterView.OnItemSelected
         return v;
     }
 
-    public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
 
-        switch (position) {
-            case 0:
-                Toast.makeText(getContext(), "poked", Toast.LENGTH_SHORT).show();
-                break;
-            case 1:
-                Toast.makeText(getContext(), "goes to task page", Toast.LENGTH_SHORT).show();
-                break;
-            case 2:
-                Toast.makeText(getContext(), "api to leave team", Toast.LENGTH_SHORT).show();
-                break;
-
-        }
-    }
 
     public void onNothingSelected(AdapterView<?> parent) {
         // Another interface callback
