@@ -19,11 +19,13 @@ import android.widget.Toast;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class TeamPageFragment extends Fragment {
-    MessageFragment messageFragment;
+    MessageFragment messageFragment = new MessageFragment();
+    TaskFragment taskFragment = new TaskFragment();
     TeamActivity team_Main = new TeamActivity(); //main menu instance created here
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         final String teamID = getArguments().getString("entryId");
         final View v = inflater.inflate(R.layout.fragment_team_page, container, false);
@@ -55,9 +57,6 @@ public class TeamPageFragment extends Fragment {
             }
         });
 
-
-        //message fragment instantiated for initially played fragment
-        messageFragment = new MessageFragment();
         Bundle args = new Bundle();
         args.putString("entryId", teamID);
         messageFragment.setArguments(args);
@@ -102,7 +101,7 @@ public class TeamPageFragment extends Fragment {
                         BlankFragment fragment4 = BlankFragment.newInstance("Tasks");
                         getChildFragmentManager()
                                 .beginTransaction()
-                                .replace(R.id.team_fragment_container, fragment4)
+                                .replace(R.id.team_fragment_container, taskFragment)
                                 .commit();
                         break;
                 }

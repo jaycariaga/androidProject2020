@@ -41,6 +41,16 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <Button
+                android:id="@+id/showTeamAction"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:text="Show Actions"
+                android:layout_gravity="center"
+                ></Button>
+
+
+<!--
             <RelativeLayout
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="wrap_content"
@@ -53,17 +63,37 @@
                     android:background="@drawable/fin_avatar"/>
             </RelativeLayout>
 
-            <ImageButton
-                android:id="@+id/imageButton"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                tools:srcCompat="@tools:sample/avatars"
-                android:layout_gravity="left" />
+           -->
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/editprofDisp"
+                    android:layout_alignParentTop="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:text="Change Profile Picture Here: "
+                    android:textColor="#FFFFFF"
+                    android:textSize="10dp"
+                    android:layout_margin="10dp"
+                    ></TextView>
+                <ImageButton
+                    android:id="@+id/imageButton"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    tools:srcCompat="@tools:sample/avatars"
+                    android:layout_below = "@+id/editprofDisp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginRight="10dp"
+                    />
+            </RelativeLayout>
 
             <ListView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                />
+            />
         </LinearLayout>
 
     </ScrollView>

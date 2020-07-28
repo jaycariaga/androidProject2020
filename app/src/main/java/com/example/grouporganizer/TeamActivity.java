@@ -1,27 +1,104 @@
 package com.example.grouporganizer;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-public class TeamActivity extends Fragment {
+public class TeamActivity extends Fragment implements AdapterView.OnItemSelectedListener {
+
+    //dropdown box for actions are here instead of a resource file because being an admin changes the actions...
+    //private Spinner spinner;
+    private static final String[] paths = {"Choose One", "Poke User", "POST a Task", "Leave Team"};
+    Button showActions;
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        final View v =  inflater.inflate(R.layout.team_page, container, false);
+        View v =  inflater.inflate(R.layout.team_page, container, false);
 
+        showActions = (Button) v.findViewById(R.id.showTeamAction);
+        showActions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View mView) {
+                //TODO: Does not work due to spinner returning nullpointerexception
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                View dialogview = inflater.inflate(R.layout.team_menu_spinner, null);
+                builder.setTitle("Pick an Action");
+                final Spinner spinner = (Spinner) mView.findViewById(R.id.spinner);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
+                        android.R.layout.simple_spinner_item, paths);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner.setAdapter(adapter);
 
+                builder.setPositiveButton("Perform Action", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(!spinner.getSelectedItem().toString().equalsIgnoreCase("Choose One")){
+                            Toast.makeText(getContext(), spinner.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+                        }
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getContext(), "Action Cancelled", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                    }
+                });
+
+                //displays popup box
+                builder.setView(dialogview);
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
+
+        /*spinner = v.findViewById(R.id.spinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
+                android.R.layout.simple_spinner_item, paths);
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
+        */
 
         return v;
     }
 
+    public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
 
+        switch (position) {
+            case 0:
+                Toast.makeText(getContext(), "poked", Toast.LENGTH_SHORT).show();
+                break;
+            case 1:
+                Toast.makeText(getContext(), "goes to task page", Toast.LENGTH_SHORT).show();
+                break;
+            case 2:
+                Toast.makeText(getContext(), "api to leave team", Toast.LENGTH_SHORT).show();
+                break;
+
+        }
+    }
+
+    public void onNothingSelected(AdapterView<?> parent) {
+        // Another interface callback
+    }
 
 }

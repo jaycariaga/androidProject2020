@@ -5,7 +5,7 @@
         android:id="@+id/page_0"
         android:enabled="true"
         android:icon="@drawable/user_avatar"
-        android:title="Home"/>
+        android:title="Menu"/>
     <item
         android:id="@+id/page_1"
         android:enabled="true"

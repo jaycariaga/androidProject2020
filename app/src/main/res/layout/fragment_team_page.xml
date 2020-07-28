@@ -22,7 +22,7 @@
             android:background="#000000"
             android:clickable="true"
             android:padding="7dp"
-            android:text="Go BACK to Home Page"
+            android:text="- BACK to Home Page"
             android:textColor="#ff0000"
             android:visibility="visible"
             app:layout_constraintStart_toStartOf="parent"
