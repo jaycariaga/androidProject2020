@@ -1,13 +1,19 @@
 package com.example.grouporganizer;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.RectShape;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,7 +42,7 @@ import retrofit2.Retrofit;
 public class MessageFragment extends Fragment {
     List<Messages> db;
     RecyclerView rv;
-    Button buttonSend;
+    ImageButton buttonSend;
     EditText editTextMessage;
     MessageListAdapter adapter;
     Retrofit retrofit = RetrofitClient.getInstance();
@@ -49,6 +55,16 @@ public class MessageFragment extends Fragment {
         final View v =  inflater.inflate(R.layout.fragment_message, container, false);
         buttonSend = v.findViewById(R.id.button_message_send);
         editTextMessage = v.findViewById(R.id.edit_text_message_create);
+
+        ShapeDrawable sd = new ShapeDrawable();
+        // Specify the shape of ShapeDrawable
+        sd.setShape(new RectShape());
+        sd.getPaint().setColor(Color.BLACK);
+        sd.getPaint().setStrokeWidth(7f);
+        sd.getPaint().setStyle(Paint.Style.STROKE);
+        editTextMessage.setBackground(sd);
+
+
         db = new ArrayList<>();
         rv = v.findViewById(R.id.message_list);
         adapter = new MessageListAdapter(db);
@@ -59,17 +75,26 @@ public class MessageFragment extends Fragment {
         buttonSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //attempt to load cached email into string data - retrieved from successful login
-                iMyService.sendgenmsg(loadEmail(), editTextMessage.getText().toString(), loadEntryId(), new Date()).enqueue(new Callback<List<Messages>>() {
-                    @Override
-                    public void onResponse(Call<List<Messages>> call, Response<List<Messages>> response) {
-                        refreshMessages();
-                    }
-                    @Override
-                    public void onFailure(Call<List<Messages>> call, Throwable t) {
-                        refreshMessages();
-                    }
-                });
+
+                if(!TextUtils.isEmpty(editTextMessage.getText().toString().trim())) {
+                    //attempt to load cached email into string data - retrieved from successful login
+                    iMyService.sendgenmsg(loadEmail(), editTextMessage.getText().toString(), loadEntryId(), new Date()).enqueue(new Callback<List<Messages>>() {
+                        @Override
+                        public void onResponse(Call<List<Messages>> call, Response<List<Messages>> response) {
+                            refreshMessages();
+                        }
+
+                        @Override
+                        public void onFailure(Call<List<Messages>> call, Throwable t) {
+                            refreshMessages();
+                        }
+                    });
+                }
+                else{
+                    Toast.makeText(getContext(), "Message must have content", Toast.LENGTH_SHORT).show();
+                }
+                editTextMessage.setText("");
+
             }
         });
 
