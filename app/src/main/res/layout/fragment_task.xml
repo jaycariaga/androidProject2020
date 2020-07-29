@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent">
@@ -14,7 +15,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#00db0e"
+            android:background="#228B22"
             android:textSize="50dp"
             android:gravity="center"
             android:padding="15dp"
@@ -29,28 +30,85 @@
             ></TextView>
 
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_weight="2"
             >
 
-            <Button
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:hint="Enter Message" />
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
+            <ImageButton
+                android:id="@+id/task_to_search_btn"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:text="Send"
-                android:background="#000000"
-                android:textColor="#FFFFFF"/>
-        </LinearLayout>
+                android:scaleType="fitXY"
+                android:background="#FFFFFF"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/ic_search_24px"/>
+
+            <Spinner
+                android:layout_toRightOf="@+id/task_to_search_btn"
+                android:id="@+id/task_sort"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#00db0e"
+                android:tooltipText="Sort By:"
+                android:shadowColor="#00db0e"
+                android:shadowDx="1.5"
+                android:shadowDy="1.3"
+                android:shadowRadius="3"
+                android:layout_margin="10dp"
+                android:background="@drawable/spinner_bgd"
+                android:layout_toLeftOf="@+id/addTaskFloater"
+                />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/addTaskFloater"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                app:fabSize="mini"
+                android:layout_alignParentRight="true"
+                app:srcCompat="@drawable/ic_add_24px"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="15dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Search"
+                android:layout_below="@+id/task_to_search_btn"
+                android:layout_marginStart="13dp"
+                android:textSize="12dp"
+                ></TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/addTaskFloater"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="10dp"
+                android:textSize="12dp"
+                android:text="Add Task"></TextView>
+
+        </RelativeLayout>
 
     </LinearLayout>
     <!--end of still frame of message send-->
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+    </ScrollView>
 
 
 </LinearLayout>
