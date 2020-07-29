@@ -98,7 +98,7 @@ public class TeamPageFragment extends Fragment {
                         break;
 
                     case R.id.page_4:
-                        BlankFragment fragment4 = BlankFragment.newInstance("Tasks");
+                        //BlankFragment fragment4 = BlankFragment.newInstance("Tasks");
                         getChildFragmentManager()
                                 .beginTransaction()
                                 .replace(R.id.team_fragment_container, taskFragment)
