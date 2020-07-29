@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:background="#FFFFFF">
+        android:background="@drawable/spinner_bgd">
 
     </Spinner>
 

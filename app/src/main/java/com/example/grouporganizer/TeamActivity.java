@@ -40,7 +40,7 @@ public class TeamActivity extends Fragment  {
                 View dialogview = inflater.inflate(R.layout.team_menu_spinner, null);
                 builder.setTitle("Pick an Action");
                 final Spinner spinner = (Spinner) dialogview.findViewById(R.id.spinner);
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
+                final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
                         android.R.layout.simple_spinner_item, paths);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner.setAdapter(adapter);
@@ -61,24 +61,21 @@ public class TeamActivity extends Fragment  {
 
                         }
                     }
-
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
 
                     }
                 });
 
-                //public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
-
-
-                //}
-
                 builder.setPositiveButton("Perform Action", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if(!spinner.getSelectedItem().toString().equalsIgnoreCase("Choose One")){
+                        if(!spinner.getSelectedItem().toString().equalsIgnoreCase(adapter.getItem(0))){
                             Toast.makeText(getContext(), spinner.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
+                        }
+                        else{
+                            Toast.makeText(getContext(), "Must choose one to perform action.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -97,22 +94,7 @@ public class TeamActivity extends Fragment  {
             }
         });
 
-        /*spinner = v.findViewById(R.id.spinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
-                android.R.layout.simple_spinner_item, paths);
-
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(this);
-        */
-
         return v;
-    }
-
-
-
-    public void onNothingSelected(AdapterView<?> parent) {
-        // Another interface callback
     }
 
 }
