@@ -18,7 +18,6 @@ import com.example.grouporganizer.Retrofit.Messages;
 
 import java.util.List;
 
-//TODO: Meant to be the adapter in teams page that loads up messages (very similar to teamslistadapter)
 public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.MessageViewHolder> {
     private List<Messages> mDataset;
 

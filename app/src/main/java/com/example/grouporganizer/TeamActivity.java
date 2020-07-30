@@ -35,7 +35,6 @@ public class TeamActivity extends Fragment  {
         showActions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: Does not work due to spinner returning nullpointerexception
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 View dialogview = inflater.inflate(R.layout.team_menu_spinner, null);
                 builder.setTitle("Pick an Action");

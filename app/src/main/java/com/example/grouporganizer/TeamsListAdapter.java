@@ -16,6 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.auth0.android.jwt.JWT;
 import com.example.grouporganizer.Retrofit.IMyService;
 import com.example.grouporganizer.Retrofit.RetrofitClient;
 import com.example.grouporganizer.Retrofit.Team;
@@ -24,6 +25,7 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
@@ -39,6 +41,10 @@ public class TeamsListAdapter extends RecyclerView.Adapter<TeamsListAdapter.Team
     Retrofit retrofit = RetrofitClient.getInstance();
     IMyService iMyService = retrofit.create(IMyService.class);
     private String result; //for checkAdmin() method
+
+    CompositeDisposable compositeDisposable = new CompositeDisposable();
+
+
 
     @NonNull
     @Override
@@ -60,7 +66,7 @@ public class TeamsListAdapter extends RecyclerView.Adapter<TeamsListAdapter.Team
         //handles admin/member text options
         Boolean check = false;
         check = getAdminCheck(mDataset.get(position).getEntryID());
-        //System.out.println("this is a " + check);
+        System.out.println("this is a " + check);
         if(check == true)
             holder.AdminCheckView.setText("Admin");
         else
@@ -118,20 +124,33 @@ public class TeamsListAdapter extends RecyclerView.Adapter<TeamsListAdapter.Team
 
     //TODO:yea im just trying to make this function take the response of check Admin and send a string from it
     //doesnt work yet needs to get admin choice inside of it
-    @SuppressLint("CheckResult")
     private Boolean getAdminCheck(String entryID){
+        result = "";
 
-        //result = "";
-        System.out.println(entryID);
+        //System.out.println(entryID);
         Observable<String> response = iMyService.checkAdmin(currentUser, entryID);
-        response.subscribe(s ->
-            result = s
-        );
-        System.out.println(result);
 
-        if(result.equals("0"))
-            return false;
-        return true;
+        try {
+            compositeDisposable.add(response.subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<String>() {
+                        @Override
+                        public void accept(String response) throws Exception {
+                            System.out.println(response);
+                            result = response;
+                        }
+                    }));
+        }
+        catch(Exception e){
+            result = "0";
+            System.out.println("Failure to compute");
+        }
+        System.out.println(result);
+        compositeDisposable.clear();
+
+        if(result.equals("1"))
+            return true;
+        return false;
 
 
     }

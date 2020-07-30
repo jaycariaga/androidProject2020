@@ -143,21 +143,21 @@ public class MainActivity extends AppCompatActivity {
         try {
             //composite Disposable destroys data that isn't helpful anymore (ex. unsuccessful logins)
             compositeDisposable.add(iMyService.loginUser(checkuser, checkpass).subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Consumer<String>() {
-                        @Override
-                        public void accept(String response) throws Exception {
-                            if(response.contains("not exist")||response.contains("Wrong")){
-                                Toast.makeText(MainActivity.this, response, Toast.LENGTH_SHORT).show();
-                                return;
-                            }
-                            JWT jwt = new JWT(response);
-                            getPreferences(MODE_PRIVATE).edit().putString("jwt", jwt.toString()).apply();
-                            startActivity(new Intent(MainActivity.this, Home_page.class));
-                            //moves state if success
-                        }
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Consumer<String>() {
+                                @Override
+                                public void accept(String response) throws Exception {
+                                    if(response.contains("not exist")||response.contains("Wrong")){
+                                        Toast.makeText(MainActivity.this, response, Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }
+                                    JWT jwt = new JWT(response);
+                                    getPreferences(MODE_PRIVATE).edit().putString("jwt", jwt.toString()).apply();
+                                    startActivity(new Intent(MainActivity.this, Home_page.class));
+                                    //moves state if success
+                                }
 
-                    }));
+                            }));
         }
         catch(Exception e){
             Toast.makeText(MainActivity.this, "Server not connected. Try Again", Toast.LENGTH_SHORT).show();

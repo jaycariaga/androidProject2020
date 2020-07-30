@@ -59,7 +59,7 @@ public class TaskFragment extends Fragment {
 
 
         ImageButton toSearch = (ImageButton) v.findViewById(R.id.task_to_search_btn);
-        //TODO:Isnt working but move task to fragment
+        //TODO:works but we need to convert navigation bar selection to search tab
         toSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
