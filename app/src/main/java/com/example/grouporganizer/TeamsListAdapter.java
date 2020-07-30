@@ -1,5 +1,6 @@
 package com.example.grouporganizer;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -37,6 +38,7 @@ public class TeamsListAdapter extends RecyclerView.Adapter<TeamsListAdapter.Team
     private String currentUser;
     Retrofit retrofit = RetrofitClient.getInstance();
     IMyService iMyService = retrofit.create(IMyService.class);
+    private String result; //for checkAdmin() method
 
     @NonNull
     @Override
@@ -56,10 +58,10 @@ public class TeamsListAdapter extends RecyclerView.Adapter<TeamsListAdapter.Team
         sd.getPaint().setStyle(Paint.Style.STROKE);
 
         //handles admin/member text options
-        int check = 0;
-        //check = Integer.parseInt(getAdminCheck(mDataset.get(position).getEntryID()));
+        Boolean check = false;
+        check = getAdminCheck(mDataset.get(position).getEntryID());
         //System.out.println("this is a " + check);
-        if(check == 1)
+        if(check == true)
             holder.AdminCheckView.setText("Admin");
         else
             holder.AdminCheckView.setText("Member");
@@ -116,26 +118,21 @@ public class TeamsListAdapter extends RecyclerView.Adapter<TeamsListAdapter.Team
 
     //TODO:yea im just trying to make this function take the response of check Admin and send a string from it
     //doesnt work yet needs to get admin choice inside of it
-    private String getAdminCheck(String entryID){
-        final String[] answer = new String[1];
-        System.out.println(entryID);
-        iMyService.checkAdmin(currentUser, entryID).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<String>() {
-                    @Override
-                    public void accept(String response) throws Exception {
-                        //fdsafdsa
-                        if(response.contains("1")) {
-                            answer[0] = "1";
-                            //moves state if success
-                        }
-                        else
-                            answer[0] = "0";
-                    }
-                });
-        System.out.println(answer);
+    @SuppressLint("CheckResult")
+    private Boolean getAdminCheck(String entryID){
 
-        return answer[0];
+        //result = "";
+        System.out.println(entryID);
+        Observable<String> response = iMyService.checkAdmin(currentUser, entryID);
+        response.subscribe(s ->
+            result = s
+        );
+        System.out.println(result);
+
+        if(result.equals("0"))
+            return false;
+        return true;
+
 
     }
 
