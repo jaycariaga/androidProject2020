@@ -1,8 +1,10 @@
 package com.example.grouporganizer;
 
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -26,6 +29,7 @@ import com.example.grouporganizer.Retrofit.Messages;
 import com.example.grouporganizer.Retrofit.RetrofitClient;
 import com.example.grouporganizer.Retrofit.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +60,44 @@ public class TaskFragment extends Fragment {
         adapter = new TaskListAdapter(db);
         rv.setAdapter(adapter);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        FloatingActionButton addingTask = (FloatingActionButton) v.findViewById(R.id.addTaskFloater);
+        addingTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                View dialogview = inflater.inflate(R.layout.task_register, null);
+                builder.setTitle("Pick an Action");
+                EditText title = (EditText) dialogview.findViewById(R.id.newTskTitle);
+                EditText tags = (EditText) dialogview.findViewById(R.id.newTskTag);
+                EditText descr = (EditText) dialogview.findViewById(R.id.newTskDscr);
+                EditText user = (EditText) dialogview.findViewById(R.id.newTskUserAssn); //should be a spinner instead
+
+                builder.setPositiveButton("Create Task", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(TextUtils.isEmpty(title.getText().toString()) || TextUtils.isEmpty(user.getText().toString())){
+                            Toast.makeText(getContext(), "MUST HAVE A TITLE!", Toast.LENGTH_SHORT).show();
+                        }
+                        else{ //enter in task creation block here
+
+                        }
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getContext(), "Action Cancelled", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                    }
+                });
+
+                //displays popup box
+                builder.setView(dialogview);
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+    });
 
 
         ImageButton toSearch = (ImageButton) v.findViewById(R.id.task_to_search_btn);
