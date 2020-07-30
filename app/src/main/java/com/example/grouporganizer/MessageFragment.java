@@ -70,7 +70,7 @@ public class MessageFragment extends Fragment {
         adapter = new MessageListAdapter(db);
         rv.setAdapter(adapter);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
-       teamID = getArguments().getString("entryId");
+        teamID = getArguments().getString("entryId");
 
         buttonSend.setOnClickListener(new View.OnClickListener() {
             @Override

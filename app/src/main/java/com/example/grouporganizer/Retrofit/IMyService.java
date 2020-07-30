@@ -69,5 +69,10 @@ public interface IMyService {
     Observable<String> checkAdmin(@Field("email") String user,
                        @Field("entryID") String entryID);
 
+    @POST("getTasks")
+    @FormUrlEncoded
+    Call<List<Task>> getTasks(@Field("email") String email,
+                              @Field("entryID") String entryID);
+
 
 }
