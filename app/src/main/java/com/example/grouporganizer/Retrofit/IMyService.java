@@ -2,6 +2,7 @@ package com.example.grouporganizer.Retrofit;
 
 //interface handles the API's that go to the NodeJS server
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -73,6 +74,21 @@ public interface IMyService {
     @FormUrlEncoded
     Call<List<Task>> getTasks(@Field("email") String email,
                               @Field("entryID") String entryID);
+
+    @POST("getTeamMembers")
+    @FormUrlEncoded
+    Call<ArrayList<String>> getTeamMembers(@Field("entryID") String entryID);
+
+    @POST("postTask")
+    @FormUrlEncoded
+    Observable<String> postTask(@Field("email") String email,
+                                @Field("entryID") String entryID,
+                                @Field("descript") String descript,
+                                @Field("title") String title,
+                                @Field("deadline") Date deadline,
+                                @Field("assigneduser") String assignee,
+                                @Field("tags") ArrayList<String> tags );
+
 
 
 }

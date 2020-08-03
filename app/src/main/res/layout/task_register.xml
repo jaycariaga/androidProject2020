@@ -6,8 +6,9 @@
     android:layout_height="match_parent"
     android:padding="20dp">
 
-    <EditText
-        android:layout_width="200dp"
+    <Spinner
+        android:background="@drawable/spinner_bgd"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:hint="Assigned User"
         android:id="@+id/newTskUserAssn"
@@ -15,7 +16,7 @@
         />
 
     <EditText
-        android:layout_width="200dp"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:hint="Title (Required)"
         android:id="@+id/newTskTitle"

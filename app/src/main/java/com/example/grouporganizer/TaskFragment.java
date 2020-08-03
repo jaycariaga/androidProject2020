@@ -30,10 +30,8 @@ import com.example.grouporganizer.Retrofit.IMyService;
 import com.example.grouporganizer.Retrofit.Messages;
 import com.example.grouporganizer.Retrofit.RetrofitClient;
 import com.example.grouporganizer.Retrofit.Task;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,10 +73,35 @@ public class TaskFragment extends Fragment {
                 EditText title = (EditText) dialogview.findViewById(R.id.newTskTitle);
                 EditText tags = (EditText) dialogview.findViewById(R.id.newTskTag);
                 EditText descr = (EditText) dialogview.findViewById(R.id.newTskDscr);
-                EditText user = (EditText) dialogview.findViewById(R.id.newTskUserAssn); //should be a spinner instead
+                Spinner users = (Spinner) dialogview.findViewById(R.id.newTskUserAssn); //should be a spinner instead
                 TextView tagView = (TextView) dialogview.findViewById(R.id.tag_view_prev);
                 Button tagEntBtn = (Button) dialogview.findViewById(R.id.tag_entry); //onclick for tag saving
                 ArrayList<String> tagTotal = new ArrayList<>();
+
+                List<String> paths = new ArrayList<String>();
+                //paths = iMyService.getTeamMembers(loadEntryId());
+                paths.add("Pick a Member:");
+                System.out.println(paths);
+
+                Call<ArrayList<String>> userArr = iMyService.getTeamMembers(loadEntryId());
+                userArr.enqueue(new Callback<ArrayList<String>>() {
+                                    @Override
+                                    public void onResponse(Call<ArrayList<String>> call, Response<ArrayList<String>> response) {
+                                        if (response.body() != null) {
+                                            paths.addAll(response.body());
+                                        }
+                                    }
+                                    @Override
+                                    public void onFailure(Call<ArrayList<String>> call, Throwable t) {
+                                        Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
+                        android.R.layout.simple_spinner_item, paths);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                users.setAdapter(adapter);
+
 
                 tagEntBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -98,7 +121,7 @@ public class TaskFragment extends Fragment {
                 builder.setPositiveButton("Create Task", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if(TextUtils.isEmpty(title.getText().toString()) || TextUtils.isEmpty(user.getText().toString())){
+                        if(TextUtils.isEmpty(title.getText().toString())){
                             Toast.makeText(getContext(), "MUST HAVE A TITLE!", Toast.LENGTH_SHORT).show();
                         }
                         else{ //enter in task creation block here
