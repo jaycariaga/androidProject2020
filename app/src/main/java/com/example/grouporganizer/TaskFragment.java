@@ -1,5 +1,6 @@
 package com.example.grouporganizer;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
@@ -34,6 +36,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -67,6 +70,7 @@ public class TaskFragment extends Fragment {
         addingTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //assigning all builds for task_register layout here
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 View dialogview = inflater.inflate(R.layout.task_register, null);
                 builder.setTitle("Pick an Action");
@@ -76,13 +80,20 @@ public class TaskFragment extends Fragment {
                 Spinner users = (Spinner) dialogview.findViewById(R.id.newTskUserAssn); //should be a spinner instead
                 TextView tagView = (TextView) dialogview.findViewById(R.id.tag_view_prev);
                 Button tagEntBtn = (Button) dialogview.findViewById(R.id.tag_entry); //onclick for tag saving
+                Button mveDatePick = (Button) dialogview.findViewById(R.id.move_to_datepick);
+                TextView dateDisplay = (TextView) dialogview.findViewById(R.id.project_add_dedlne);
+
+                //Converting optional editTexts to strings now:
+                String descript = descr.getText().toString().trim();
+
+                //tagTotal is the resultant list of tags
                 ArrayList<String> tagTotal = new ArrayList<>();
 
                 List<String> paths = new ArrayList<String>();
                 //paths = iMyService.getTeamMembers(loadEntryId());
                 paths.add("Pick a Member:");
-                System.out.println(paths);
 
+                //refreshes Team member list for the spinner of users
                 Call<ArrayList<String>> userArr = iMyService.getTeamMembers(loadEntryId());
                 userArr.enqueue(new Callback<ArrayList<String>>() {
                                     @Override
@@ -96,13 +107,12 @@ public class TaskFragment extends Fragment {
                                         Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                                     }
                                 });
-
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
                         android.R.layout.simple_spinner_item, paths);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 users.setAdapter(adapter);
 
-
+                //tags are handled here for tagTotal and TextView of tag list
                 tagEntBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -114,18 +124,48 @@ public class TaskFragment extends Fragment {
                         tagTotal.add(tags.getText().toString());
                         tagView.setText(String.join(", ", tagTotal));
                         tags.setText("");
+                }
+                });
 
+                //handles deadline picking: inflates new View as well
+                mveDatePick.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                        View dateView = inflater.inflate(R.layout.date_picker_task, null);
+                        builder.setTitle("Pick a Date");
+                        //set methods to implement date changes here:
+                        DatePicker datePicked = (DatePicker) dateView.findViewById(R.id.datePickerTask);
+
+
+                        builder.setPositiveButton("Set Deadline", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dateDisplay.setText(datePicked.getDayOfMonth() + "/" + datePicked.getMonth() + "/" + datePicked.getYear());
+                            }
+                        });
+                        builder.setNegativeButton("Anytime", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dateDisplay.setText("ANYTIME");
+                            }
+                        });
+
+                        builder.setView(dateView);
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
                     }
                 });
 
+            //Posting task starts here:
                 builder.setPositiveButton("Create Task", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if(TextUtils.isEmpty(title.getText().toString())){
+                        if(TextUtils.isEmpty(title.getText().toString()) || users.getSelectedItem().toString().equalsIgnoreCase(adapter.getItem(0))){
                             Toast.makeText(getContext(), "MUST HAVE A TITLE!", Toast.LENGTH_SHORT).show();
                         }
                         else{ //enter in task creation block here
-
+                            iMyService.postTask(loadEmail(), loadEntryId(), descript, title.getText().toString().trim(), new Date(), users.getSelectedItem().toString(), tagTotal);
                         }
                     }
                 });
