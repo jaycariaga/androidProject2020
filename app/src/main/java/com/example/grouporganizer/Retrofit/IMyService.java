@@ -85,9 +85,9 @@ public interface IMyService {
                                 @Field("entryID") String entryID,
                                 @Field("descript") String descript,
                                 @Field("title") String title,
-                                @Field("deadline") Date deadline,
+                                @Field("deadline") String deadline,
                                 @Field("assigneduser") String assignee,
-                                @Field("tags") ArrayList<String> tags );
+                                @Field("tags") List<String> tags );
 
 
 

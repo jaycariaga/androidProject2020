@@ -5,6 +5,7 @@ public class Task {
     private String description;
     private String title;
     private String deadline;
+    private String[] tags;
 
     public String getTitle(){
         return title;
@@ -15,6 +16,10 @@ public class Task {
 
     public String getDeadline(){
         return deadline;
+    }
+
+    public String getTags(){
+        return String.join(", ", tags);
     }
 
 }

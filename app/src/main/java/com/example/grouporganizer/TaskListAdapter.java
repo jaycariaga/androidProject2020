@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.grouporganizer.Retrofit.Task;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskViewHolder>{
@@ -24,7 +26,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskVi
     @NonNull
     @Override
     public TaskViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        RelativeLayout v = (RelativeLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.team_item, parent, false);
+        RelativeLayout v = (RelativeLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.task_item, parent, false);
         TaskListAdapter.TaskViewHolder vh = new TaskListAdapter.TaskViewHolder(v);
         return vh;
     }
@@ -46,6 +48,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskVi
         holder.title.setText(mDataset.get(position).getTitle());
         holder.TaskCrd.setBackground(sd);
         holder.descrip.setText(mDataset.get(position).getDescription());
+        holder.tagList.setText(mDataset.get(position).getTags());
     }
 
     public static class TaskViewHolder extends RecyclerView.ViewHolder {
@@ -53,12 +56,14 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskVi
         public TextView deadline;
         public RelativeLayout TaskCrd;
         public TextView descrip;
+        public TextView tagList;
         public TaskViewHolder(View v) {
             super(v);
             title = v.findViewById(R.id.tskTitle);
             deadline = v.findViewById(R.id.tskDedlne);
             TaskCrd = v.findViewById(R.id.tskView);
             descrip = v.findViewById(R.id.tskDscr);
+            tagList = v.findViewById(R.id.tsk_Tags);
 
         }
     }

@@ -35,10 +35,16 @@ import com.example.grouporganizer.Retrofit.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -50,7 +56,8 @@ public class TaskFragment extends Fragment {
     TaskListAdapter adapter;
     Retrofit retrofit = RetrofitClient.getInstance();
     IMyService iMyService = retrofit.create(IMyService.class);
-    String teamID;
+    CompositeDisposable compositeDisposable = new CompositeDisposable();
+
 
 
     private static final String[] paths = {"Sort By: ", "Deadline", "Title", "Date Assigned"};
@@ -83,11 +90,8 @@ public class TaskFragment extends Fragment {
                 Button mveDatePick = (Button) dialogview.findViewById(R.id.move_to_datepick);
                 TextView dateDisplay = (TextView) dialogview.findViewById(R.id.project_add_dedlne);
 
-                //Converting optional editTexts to strings now:
-                String descript = descr.getText().toString().trim();
-
                 //tagTotal is the resultant list of tags
-                ArrayList<String> tagTotal = new ArrayList<>();
+                List<String> tagTotal = new ArrayList<>();
 
                 List<String> paths = new ArrayList<String>();
                 //paths = iMyService.getTeamMembers(loadEntryId());
@@ -137,7 +141,6 @@ public class TaskFragment extends Fragment {
                         //set methods to implement date changes here:
                         DatePicker datePicked = (DatePicker) dateView.findViewById(R.id.datePickerTask);
 
-
                         builder.setPositiveButton("Set Deadline", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -165,7 +168,18 @@ public class TaskFragment extends Fragment {
                             Toast.makeText(getContext(), "MUST HAVE A TITLE!", Toast.LENGTH_SHORT).show();
                         }
                         else{ //enter in task creation block here
-                            iMyService.postTask(loadEmail(), loadEntryId(), descript, title.getText().toString().trim(), new Date(), users.getSelectedItem().toString(), tagTotal);
+                            compositeDisposable.add(iMyService.postTask(loadEmail(), loadEntryId(), descr.getText().toString().trim(), title.getText().toString().trim(),
+                                    dateDisplay.getText().toString(), users.getSelectedItem().toString(), tagTotal)
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(new Consumer<String>() {
+                                @Override
+                                public void accept(String response) throws Exception {
+                                    Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
+                                    System.out.println("Broohahaha");
+                                    refreshTasks();
+                                }
+                            }));
                         }
                     }
                 });
@@ -226,7 +240,7 @@ public class TaskFragment extends Fragment {
         });
 
         //ends spinner sorter
-
+        compositeDisposable.clear();
         refreshTasks();
         return v;
     }
