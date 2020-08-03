@@ -7,31 +7,58 @@
     android:padding="20dp">
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:hint="Assigned User"
+        android:id="@+id/newTskUserAssn"
+
+        />
+
+    <EditText
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:hint="Title (Required)"
         android:id="@+id/newTskTitle"
         />
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:hint="Description"
         android:id="@+id/newTskDscr"
     />
 
-    <EditText
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Tags"
-        android:id="@+id/newTskTag"
-        />
+        >
+        <EditText
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:hint="Tag/Caption"
+            android:id="@+id/newTskTag"
+            android:layout_toLeftOf="@+id/tag_entry"
+            android:layout_alignParentLeft="true">
+        </EditText>
 
-    <EditText
+        <Button
+            android:id="@+id/tag_entry"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:text="Enter A Tag"
+            android:textSize="15dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/rounded_corner_submit"
+            android:layout_marginLeft="10dp"
+            android:clickable="true"
+            android:textColor="#FFFFFF"
+            />
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/tag_view_prev"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Assigned User"
-        android:id="@+id/newTskUserAssn"
+        android:hint="Entered Tags go Here."
         />
 
 

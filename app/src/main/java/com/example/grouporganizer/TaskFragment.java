@@ -10,9 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -30,6 +32,8 @@ import com.example.grouporganizer.Retrofit.RetrofitClient;
 import com.example.grouporganizer.Retrofit.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,6 +76,24 @@ public class TaskFragment extends Fragment {
                 EditText tags = (EditText) dialogview.findViewById(R.id.newTskTag);
                 EditText descr = (EditText) dialogview.findViewById(R.id.newTskDscr);
                 EditText user = (EditText) dialogview.findViewById(R.id.newTskUserAssn); //should be a spinner instead
+                TextView tagView = (TextView) dialogview.findViewById(R.id.tag_view_prev);
+                Button tagEntBtn = (Button) dialogview.findViewById(R.id.tag_entry); //onclick for tag saving
+                ArrayList<String> tagTotal = new ArrayList<>();
+
+                tagEntBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(TextUtils.isEmpty(tags.getText().toString().trim())){
+                            Toast.makeText(getContext(), "MUST ENTER A TAG!", Toast.LENGTH_SHORT).show();
+                            tags.setText("");
+                            return;
+                        }
+                        tagTotal.add(tags.getText().toString());
+                        tagView.setText(String.join(", ", tagTotal));
+                        tags.setText("");
+
+                    }
+                });
 
                 builder.setPositiveButton("Create Task", new DialogInterface.OnClickListener() {
                     @Override
