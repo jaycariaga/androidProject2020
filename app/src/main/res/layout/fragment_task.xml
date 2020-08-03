@@ -59,8 +59,8 @@
                 android:tooltipText="Sort By:"
                 android:shadowColor="#00db0e"
                 android:shadowDx="1.5"
-                android:shadowDy="1.3"
-                android:shadowRadius="3"
+                android:shadowDy="2"
+                android:shadowRadius="10"
                 android:layout_margin="10dp"
                 android:background="@drawable/spinner_bgd"
                 android:layout_toLeftOf="@+id/addTaskFloater"
@@ -85,6 +85,14 @@
                 android:layout_marginStart="13dp"
                 android:textSize="12dp"
                 ></TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Sort By:"
+                android:layout_below="@+id/task_sort"
+                />
 
             <TextView
                 android:layout_width="wrap_content"
