@@ -103,9 +103,9 @@ public class FragmentTeamsList extends Fragment {
         //item click transitions to team page
         adapter.setOnItemClickListener(new TeamsListAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(int position) {
+            public void onItemClick(int position, String roleType) {
                 Team selectedTm = db.get(position);
-                saveTeamPref(selectedTm.getName(), selectedTm.getEntryID());
+                saveTeamPref(selectedTm.getName(), selectedTm.getEntryID(), roleType);
                 callback.onTeamSelected(selectedTm.getTeamID());
 
             }
@@ -131,19 +131,17 @@ public class FragmentTeamsList extends Fragment {
         return v;
     }
 
-    void updateViews() {
-    }
-
     public void Reload(){
         getActivity().getSupportFragmentManager().beginTransaction().replace(FragmentTeamsList.this.getId(), new FragmentTeamsList()).commit();
     }
 
-    private void saveTeamPref(String team, String entryID){
+    private void saveTeamPref(String team, String entryID, String roleType){
         //local storage of currently logged in user...
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("teamname", team); //stores the TEAM NAME of the stored team
         editor.putString("teamID", entryID); //teamID stores the ENTRYID of the team being joined
+        editor.putString("role", roleType);
         editor.commit();
         //System.out.println(team);
     }

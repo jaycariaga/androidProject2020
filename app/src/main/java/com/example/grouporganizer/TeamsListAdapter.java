@@ -2,11 +2,13 @@ package com.example.grouporganizer;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RectShape;
 import android.os.StrictMode;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +40,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class TeamsListAdapter extends RecyclerView.Adapter<TeamsListAdapter.TeamsViewHolder> {
-    Integer admintest;
     private List<Team> mDataset;
     private OnItemClickListener mListener;
     private String currentUser;
@@ -96,7 +97,7 @@ public class TeamsListAdapter extends RecyclerView.Adapter<TeamsListAdapter.Team
 
     //attempt to do item click
     public interface OnItemClickListener{
-        void onItemClick(int position);
+        void onItemClick(int position, String membership);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener){
@@ -117,9 +118,11 @@ public class TeamsListAdapter extends RecyclerView.Adapter<TeamsListAdapter.Team
                 @Override
                 public void onClick(View itemView) {
                     if(listener != null){
+                        //attempt to save admin roles upon clicking
+                        String membership = AdminCheckView.getText().toString();
                         int position = getAdapterPosition();
                         if(position != RecyclerView.NO_POSITION){
-                            listener.onItemClick(position);
+                            listener.onItemClick(position, membership);
                         }
                     }
                 }
@@ -132,42 +135,11 @@ public class TeamsListAdapter extends RecyclerView.Adapter<TeamsListAdapter.Team
         currentUser = user;
     }
 
-
-    private Integer setAdminInt(Integer y){
-        return admintest = y;
-    }
-    private Integer getAdminInt(){
-        return admintest;
-    }
-
     //TODO:yea im just trying to make this function take the response of check Admin and send a string from it
-    //doesnt work yet needs to get admin choice inside of it
     private Boolean getAdminCheck(String entryID){
         Integer result = 0;
-
         //System.out.println(entryID);
         Call<Integer> getans = iMyService.checkAdmin(currentUser, entryID);
-    /*
-        getans.enqueue(new Callback<Integer>() {
-            @Override
-            public void onResponse(Call<Integer> call, Response<Integer> response) {
-                if (response.isSuccessful()) {
-                    //Integer responseString = response.body();
-                    System.out.println(response.body());
-                    setAdminInt(response.body());
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<Integer> call, Throwable t) {
-                System.out.println("failed to do");
-            }
-        });
-
-
-     */
-
         Response<Integer> response = null;
         try {
             response = getans.execute();
@@ -175,17 +147,10 @@ public class TeamsListAdapter extends RecyclerView.Adapter<TeamsListAdapter.Team
             e.printStackTrace();
         }
         result = response.body();
-
-
         if(result == 0 || result == null)
             return false;
         return true;
-
-
     }
-
-
-
 
 
 }
