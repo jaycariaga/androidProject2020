@@ -94,7 +94,7 @@ public class TaskFragment extends Fragment {
                 List<String> tagTotal = new ArrayList<>();
 
                 List<String> paths = new ArrayList<String>();
-                //paths = iMyService.getTeamMembers(loadEntryId());
+                //we add the hint item to spinner paths
                 paths.add("Pick a Member:");
 
                 //refreshes Team member list for the spinner of users
@@ -185,6 +185,7 @@ public class TaskFragment extends Fragment {
                                 }
                             }));
                         }
+                        compositeDisposable.clear();
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

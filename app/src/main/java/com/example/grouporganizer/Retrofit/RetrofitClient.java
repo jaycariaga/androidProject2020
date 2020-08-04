@@ -17,6 +17,7 @@ public class RetrofitClient {
             instance = new Retrofit.Builder()
                     .baseUrl("http://10.0.2.2:3000/") //emulator's loads up ip address of MY linux server (use 'http:10.0.2.2:#port' instead for local use)
                     .addConverterFactory(GsonConverterFactory.create())
+                    .addConverterFactory(ScalarsConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .build();
         return instance;

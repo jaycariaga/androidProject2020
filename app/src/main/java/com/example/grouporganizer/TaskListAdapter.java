@@ -7,6 +7,7 @@ import android.graphics.drawable.shapes.RectShape;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -15,19 +16,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.grouporganizer.Retrofit.Task;
 
-import org.w3c.dom.Text;
 
 import java.util.List;
 
 public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskViewHolder>{
-
+    private OnItemClickListener mListener;
     private List<Task> mDataset;
 
     @NonNull
     @Override
     public TaskViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         RelativeLayout v = (RelativeLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.task_item, parent, false);
-        TaskListAdapter.TaskViewHolder vh = new TaskListAdapter.TaskViewHolder(v);
+        TaskViewHolder vh = new TaskViewHolder(v, mListener);
         return vh;
     }
 
@@ -51,19 +51,43 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskVi
         holder.tagList.setText(mDataset.get(position).getTags());
     }
 
+    //attempt to do item click
+    public interface OnItemClickListener{
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        mListener = listener;
+    }
+
+
     public static class TaskViewHolder extends RecyclerView.ViewHolder {
         public TextView title;
         public TextView deadline;
         public RelativeLayout TaskCrd;
         public TextView descrip;
         public TextView tagList;
-        public TaskViewHolder(View v) {
+        public Button taskSubmit;
+        public TaskViewHolder(View v, final OnItemClickListener listener) {
             super(v);
             title = v.findViewById(R.id.tskTitle);
             deadline = v.findViewById(R.id.tskDedlne);
             TaskCrd = v.findViewById(R.id.tskView);
             descrip = v.findViewById(R.id.tskDscr);
             tagList = v.findViewById(R.id.tsk_Tags);
+            taskSubmit = v.findViewById(R.id.taskSubmitAction);
+
+            taskSubmit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(listener != null){
+                        int position = getAdapterPosition();
+                        if(position != RecyclerView.NO_POSITION){
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
 
         }
     }

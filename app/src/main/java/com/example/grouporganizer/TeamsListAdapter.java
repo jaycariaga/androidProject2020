@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RectShape;
+import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,8 @@ import com.example.grouporganizer.Retrofit.IMyService;
 import com.example.grouporganizer.Retrofit.RetrofitClient;
 import com.example.grouporganizer.Retrofit.Team;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -35,12 +38,13 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class TeamsListAdapter extends RecyclerView.Adapter<TeamsListAdapter.TeamsViewHolder> {
+    Integer admintest;
     private List<Team> mDataset;
     private OnItemClickListener mListener;
     private String currentUser;
     Retrofit retrofit = RetrofitClient.getInstance();
     IMyService iMyService = retrofit.create(IMyService.class);
-    private String result; //for checkAdmin() method
+    //private String result; //for checkAdmin() method
 
     CompositeDisposable compositeDisposable = new CompositeDisposable();
 
@@ -51,6 +55,12 @@ public class TeamsListAdapter extends RecyclerView.Adapter<TeamsListAdapter.Team
     public TeamsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         RelativeLayout v = (RelativeLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.team_item, parent, false);
         TeamsViewHolder vh = new TeamsViewHolder(v, mListener);
+        //trying this out for the .execute() function
+        if (android.os.Build.VERSION.SDK_INT > 9)
+        {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
         return vh;
     }
 
@@ -122,35 +132,54 @@ public class TeamsListAdapter extends RecyclerView.Adapter<TeamsListAdapter.Team
         currentUser = user;
     }
 
+
+    private Integer setAdminInt(Integer y){
+        return admintest = y;
+    }
+    private Integer getAdminInt(){
+        return admintest;
+    }
+
     //TODO:yea im just trying to make this function take the response of check Admin and send a string from it
     //doesnt work yet needs to get admin choice inside of it
     private Boolean getAdminCheck(String entryID){
-        result = "";
+        Integer result = 0;
 
         //System.out.println(entryID);
-        Observable<String> response = iMyService.checkAdmin(currentUser, entryID);
+        Call<Integer> getans = iMyService.checkAdmin(currentUser, entryID);
+    /*
+        getans.enqueue(new Callback<Integer>() {
+            @Override
+            public void onResponse(Call<Integer> call, Response<Integer> response) {
+                if (response.isSuccessful()) {
+                    //Integer responseString = response.body();
+                    System.out.println(response.body());
+                    setAdminInt(response.body());
+                }
 
+            }
+
+            @Override
+            public void onFailure(Call<Integer> call, Throwable t) {
+                System.out.println("failed to do");
+            }
+        });
+
+
+     */
+
+        Response<Integer> response = null;
         try {
-            compositeDisposable.add(response.subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Consumer<String>() {
-                        @Override
-                        public void accept(String response) throws Exception {
-                            System.out.println(response);
-                            result = response;
-                        }
-                    }));
+            response = getans.execute();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        catch(Exception e){
-            result = "0";
-            System.out.println("Failure to compute");
-        }
-        System.out.println(result);
-        compositeDisposable.clear();
+        result = response.body();
 
-        if(result.equals("1"))
-            return true;
-        return false;
+
+        if(result == 0 || result == null)
+            return false;
+        return true;
 
 
     }
