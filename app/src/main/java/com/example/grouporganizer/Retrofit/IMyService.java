@@ -87,7 +87,7 @@ public interface IMyService {
                                 @Field("title") String title,
                                 @Field("deadline") String deadline,
                                 @Field("assigneduser") String assignee,
-                                @Field("tags") List<String> tags );
+                                @Field("tags") String tags );
 
 
 

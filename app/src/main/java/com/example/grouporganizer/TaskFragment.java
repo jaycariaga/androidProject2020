@@ -125,7 +125,7 @@ public class TaskFragment extends Fragment {
                             tags.setText("");
                             return;
                         }
-                        tagTotal.add(tags.getText().toString());
+                        tagTotal.add(tags.getText().toString().trim());
                         tagView.setText(String.join(", ", tagTotal));
                         tags.setText("");
                 }
@@ -164,19 +164,23 @@ public class TaskFragment extends Fragment {
                 builder.setPositiveButton("Create Task", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+
                         if(TextUtils.isEmpty(title.getText().toString()) || users.getSelectedItem().toString().equalsIgnoreCase(adapter.getItem(0))){
                             Toast.makeText(getContext(), "MUST HAVE A TITLE!", Toast.LENGTH_SHORT).show();
                         }
                         else{ //enter in task creation block here
+                            String checkDate = dateDisplay.getText().toString();
+                            if(!checkDate.contains("/")){
+                                checkDate =  "ANYTIME";
+                            }
                             compositeDisposable.add(iMyService.postTask(loadEmail(), loadEntryId(), descr.getText().toString().trim(), title.getText().toString().trim(),
-                                    dateDisplay.getText().toString(), users.getSelectedItem().toString(), tagTotal)
+                                    checkDate, users.getSelectedItem().toString(), String.join(", ", tagTotal))
                                     .subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .subscribe(new Consumer<String>() {
                                 @Override
                                 public void accept(String response) throws Exception {
                                     Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
-                                    System.out.println("Broohahaha");
                                     refreshTasks();
                                 }
                             }));
