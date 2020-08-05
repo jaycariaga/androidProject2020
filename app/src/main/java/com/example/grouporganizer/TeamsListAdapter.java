@@ -77,7 +77,7 @@ public class TeamsListAdapter extends RecyclerView.Adapter<TeamsListAdapter.Team
         //handles admin/member text options
         Boolean check = false;
         check = getAdminCheck(mDataset.get(position).getEntryID());
-        System.out.println("this is a " + check);
+        //System.out.println("this is a " + check);
         if(check == true)
             holder.AdminCheckView.setText("Admin");
         else

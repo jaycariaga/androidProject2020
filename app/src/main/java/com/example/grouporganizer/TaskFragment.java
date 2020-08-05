@@ -32,6 +32,7 @@ import com.example.grouporganizer.Retrofit.IMyService;
 import com.example.grouporganizer.Retrofit.Messages;
 import com.example.grouporganizer.Retrofit.RetrofitClient;
 import com.example.grouporganizer.Retrofit.Task;
+import com.example.grouporganizer.Retrofit.Team;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
@@ -80,7 +81,7 @@ public class TaskFragment extends Fragment {
                 //assigning all builds for task_register layout here
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 View dialogview = inflater.inflate(R.layout.task_register, null);
-                builder.setTitle("Pick an Action");
+                builder.setTitle("Creating New Task");
                 EditText title = (EditText) dialogview.findViewById(R.id.newTskTitle);
                 EditText tags = (EditText) dialogview.findViewById(R.id.newTskTag);
                 EditText descr = (EditText) dialogview.findViewById(R.id.newTskDscr);
@@ -158,7 +159,7 @@ public class TaskFragment extends Fragment {
                         AlertDialog dialog = builder.create();
                         dialog.show();
                     }
-                });
+                }); //ends deadline spinner scroll
 
             //Posting task starts here:
                 builder.setPositiveButton("Create Task", new DialogInterface.OnClickListener() {
@@ -185,7 +186,6 @@ public class TaskFragment extends Fragment {
                                 }
                             }));
                         }
-                        compositeDisposable.clear();
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -201,8 +201,40 @@ public class TaskFragment extends Fragment {
                 AlertDialog dialog = builder.create();
                 dialog.show();
             }
-    });
+        }); //ends add task floating button scenes
 
+
+        //item click to allow user to submit task solution
+        adapter.setOnItemClickListener(new TaskListAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                //assigning all builds for task_register layout here
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                View dialogview = inflater.inflate(R.layout.task_answer, null);
+                builder.setTitle("Submit Solution to Task");
+                EditText ans_descr = (EditText) dialogview.findViewById(R.id.tsk_sub_descr);
+                EditText ans_notes = (EditText) dialogview.findViewById(R.id.tsk_sub_notes);
+
+                builder.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getContext(), "Submitted", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getContext(), "Cancelled Action", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                //displays popup box
+                builder.setView(dialogview);
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
 
         ImageButton toSearch = (ImageButton) v.findViewById(R.id.task_to_search_btn);
         //TODO:works but we need to convert navigation bar selection to search tab
@@ -259,6 +291,12 @@ public class TaskFragment extends Fragment {
     private String loadEntryId(){
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         String data = sharedPreferences.getString("teamID", "");
+        return data;
+    }
+
+    private String loadTeamRole(){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String data = sharedPreferences.getString("role", "");
         return data;
     }
 
