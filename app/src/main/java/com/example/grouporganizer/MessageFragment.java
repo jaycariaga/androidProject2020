@@ -48,6 +48,7 @@ public class MessageFragment extends Fragment {
     Retrofit retrofit = RetrofitClient.getInstance();
     IMyService iMyService = retrofit.create(IMyService.class);
     String teamID;
+    ImageButton refresh;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -55,6 +56,8 @@ public class MessageFragment extends Fragment {
         final View v =  inflater.inflate(R.layout.fragment_message, container, false);
         buttonSend = v.findViewById(R.id.button_message_send);
         editTextMessage = v.findViewById(R.id.edit_text_message_create);
+        refresh = (ImageButton) v.findViewById(R.id.refreshMessages);
+
 
         ShapeDrawable sd = new ShapeDrawable();
         // Specify the shape of ShapeDrawable
@@ -71,6 +74,14 @@ public class MessageFragment extends Fragment {
         rv.setAdapter(adapter);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
         teamID = getArguments().getString("entryId");
+
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                refreshMessages();
+                Toast.makeText(getContext(), "Refreshed", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         buttonSend.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -58,6 +58,7 @@ public class TaskFragment extends Fragment {
     Retrofit retrofit = RetrofitClient.getInstance();
     IMyService iMyService = retrofit.create(IMyService.class);
     CompositeDisposable compositeDisposable = new CompositeDisposable();
+    ImageButton refresh;
 
 
 
@@ -73,6 +74,15 @@ public class TaskFragment extends Fragment {
         adapter = new TaskListAdapter(db);
         rv.setAdapter(adapter);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
+        refresh = (ImageButton) v.findViewById(R.id.refreshTasks);
+
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                refreshTasks();
+                Toast.makeText(getContext(), "Refreshed", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         FloatingActionButton addingTask = (FloatingActionButton) v.findViewById(R.id.addTaskFloater);
         addingTask.setOnClickListener(new View.OnClickListener() {
