@@ -24,6 +24,6 @@ Develop secure http APIs with mongoDB and Node.js and run it thru the Android HT
 <br />
 4. Developed a navigating bar for options: messaging services, search widget, team main menu (meant as a settings view for the user or a control panel for the admin of the team), a data search panel, and lastly a task/scheduler widget with a submission sub-view 
 <br />
-5. Widgets Completed: Messaging (v1)
+5. Widgets Completed: Messaging (v1), Task/Scheduler (posting is done, submitting solutions not completed)
 <br />
 6. <b>Widgets TODO: Data, Search, Team Main Menu (Settings), and Task/Schedulers </b>
