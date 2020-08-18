@@ -61,7 +61,6 @@ public class Home_page extends AppCompatActivity implements FragmentTeamsList.On
     }
 
 
-
     //loads name of the logged in user: meant for fetching email of current user for reference
     private String LoadPreferences(){
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -71,6 +70,8 @@ public class Home_page extends AppCompatActivity implements FragmentTeamsList.On
         return data;
     }
 
+//since Home_page is the Activity for the rest of the app besides login, onAttachFragment
+//will be the first displayed fragment and all other fragments will be waiting for transition until logout
     @Override
     public void onAttachFragment(@NonNull Fragment fragment) {
         if (fragment instanceof FragmentTeamsList) {
@@ -79,6 +80,7 @@ public class Home_page extends AppCompatActivity implements FragmentTeamsList.On
         }
     }
 
+//transfers transaction to the selected team's page
     @Override
     public void onTeamSelected(String team) {
         FragmentTransaction transaction = fm.beginTransaction();
