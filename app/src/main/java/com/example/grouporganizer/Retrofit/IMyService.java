@@ -107,7 +107,7 @@ public interface IMyService {
                                 @Field("tags") String tags );
 
 
-//used in:
+//TODO: using in new list/addapters
     @POST("searchgetGen")
     @FormUrlEncoded
     Call<ArrayList<SearchInTeam>> searchgetGen(

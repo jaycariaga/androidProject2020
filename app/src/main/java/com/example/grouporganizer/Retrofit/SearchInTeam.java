@@ -1,8 +1,8 @@
 package com.example.grouporganizer.Retrofit;
 
 public class SearchInTeam {
-    private Messages messages;
-    private Task tasks;
+    Messages messages;
+    Task tasks;
 
     public SearchInTeam(){
 
