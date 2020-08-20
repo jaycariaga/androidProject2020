@@ -2,6 +2,8 @@ package com.example.grouporganizer.Retrofit;
 
 //interface handles the API's that go to the NodeJS server
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -108,12 +110,19 @@ public interface IMyService {
 
 
 //TODO: using in new list/addapters
-    @POST("searchgetGen")
+    @POST("searchgetMsg")
     @FormUrlEncoded
-    Call<ArrayList<SearchInTeam>> searchgetGen(
+    Call<List<Messages>> searchgetMsg(
             @Field("entryID") String entryID
     );
 
-
+    @POST("searchgetTask")
+    @FormUrlEncoded
+    Call<List<Task>> searchgetTask(
+            @Field("entryID") String entryID,
+            @Field("title") String title,
+            @Field("description") String description,
+            @Field("tags") String tags
+            );
 
 }
